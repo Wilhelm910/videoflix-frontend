@@ -1,15 +1,48 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Modal, Typography } from "@mui/material";
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import { UserProps } from "../../utils/types";
+import { useState } from "react";
+import { modalStyle } from "../../static/styles";
+import UserLogin from "../auth/UserLogin";
 
-export default function UserMask() {
+
+type UserMaskProps = {
+    user: UserProps
+}
+
+
+export default function UserMask({ user }: UserMaskProps) {
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+
+    const getRandomColor = () => {
+        const red = Math.floor(Math.random() * 256);
+        const green = Math.floor(Math.random() * 256);
+        const blue = Math.floor(Math.random() * 256);
+        const color = `rgb(${red}, ${green}, ${blue})`;
+        return color;
+    }
+
     return (
-        <>
-            <Box borderRadius={2} border="2px solid #ad1c1c"
-                sx={{ "&:hover": { borderColor: "rgb(237, 232, 232);", cursor: 'pointer', } }}
-                width="200px" height="200px" bgcolor="#ad1c1c">
-                <SentimentSatisfiedAltIcon sx={{ color: "rgb(237, 232, 232);", width: "100%", height: "100%" }} />
+        <Box display="flex" flexDirection="column" alignItems="center">
+            <Box onClick={handleOpen} borderRadius={2} border="2px solid black"
+                sx={{ "&:hover": { borderColor: "rgb(237, 232, 232);", cursor: 'pointer', transform: "scale(1.01)", transition: "transform .2s;" } }}
+                width="200px" height="200px" bgcolor={getRandomColor()}>
+                <SentimentSatisfiedAltIcon sx={{ color: getRandomColor(), width: "100%", height: "100%" }} />
             </Box>
-            <Typography mt={1}>NAME</Typography>
-        </>
+            <Typography mt={1}>{user.username}</Typography>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={modalStyle}>
+                    <UserLogin />
+                </Box>
+            </Modal>
+        </Box>
     )
 }

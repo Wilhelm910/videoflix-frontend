@@ -1,16 +1,11 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { BASE_URL } from '../../static/api';
+import { UserProps } from "../../utils/types";
 
 
 
-type UserProps = {
-    username: string
-    first_name: string
-    last_name: string
-    email: string
-    password: string
-}
+
 
 const initialUserData: UserProps = {
     username: "",
