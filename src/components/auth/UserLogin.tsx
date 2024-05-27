@@ -1,6 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { BASE_URL } from "../../static/api";
+import { useNavigate } from "react-router-dom";
 
 type UserProps = {
     username: string
@@ -19,6 +20,7 @@ type UserLoginProps = {
 
 export default function UserLogin({ username, notify }: UserLoginProps) {
     const [user, setUser] = useState<UserProps>(initialUserData(username))
+    const navigate = useNavigate()
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -42,6 +44,7 @@ export default function UserLogin({ username, notify }: UserLoginProps) {
             if (response.ok) {
                 sessionStorage.setItem("token", data.token)
                 setUser(initialUserData(username))
+                navigate("/home/")
             } else {
                 console.log(response)
                 notify("Falsches Passwort")
