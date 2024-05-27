@@ -16,11 +16,12 @@ const initialUserData: UserProps = {
 }
 
 type NewUserModalProps = {
-    notify: (message:string) => void
+    notify: (message: string) => void
+    setUserList: (updateFn: (prevUserList: UserProps[]) => UserProps[]) => void;
 }
 
 
-export default function NewUserModal({ notify }: NewUserModalProps) {
+export default function NewUserModal({ notify, setUserList }: NewUserModalProps) {
     const [user, setUser] = useState<UserProps>(initialUserData)
     const [confirmPassword, setConfirmPassword] = useState<string>("")
 
@@ -49,6 +50,8 @@ export default function NewUserModal({ notify }: NewUserModalProps) {
                     body: JSON.stringify({ ...user, username })
                 })
                 if (response.ok) {
+                    const newUser = { ...user, username }
+                    setUserList(prev => [...prev, newUser])
                     setUser(initialUserData)
                     setConfirmPassword("")
                     notify("Benutzer erfolgreich angelegt")
@@ -68,6 +71,7 @@ export default function NewUserModal({ notify }: NewUserModalProps) {
         <form>
             <Box display="flex" flexDirection="column" gap={2}>
                 <TextField
+                    required
                     id="outlined-password-input"
                     label="Vorname"
                     type="text"
@@ -76,6 +80,7 @@ export default function NewUserModal({ notify }: NewUserModalProps) {
                     onChange={(e) => handleChange(e)}
                 />
                 <TextField
+                    required
                     id="outlined-password-input"
                     label="Nachname"
                     type="text"
@@ -84,6 +89,7 @@ export default function NewUserModal({ notify }: NewUserModalProps) {
                     onChange={(e) => handleChange(e)}
                 />
                 <TextField
+                    required
                     id="outlined-password-input"
                     label="E-Mail"
                     type="email"
@@ -92,6 +98,7 @@ export default function NewUserModal({ notify }: NewUserModalProps) {
                     onChange={(e) => handleChange(e)}
                 />
                 <TextField
+                    required
                     id="outlined-password-input"
                     label="Passwort"
                     type="password"
@@ -100,6 +107,7 @@ export default function NewUserModal({ notify }: NewUserModalProps) {
                     onChange={(e) => handleChange(e)}
                 />
                 <TextField
+                    required
                     id="outlined-password-input"
                     label="Bestätige dein Passwort"
                     type="password"

@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BASE_URL } from "../../static/api";
 import { UserProps } from "../../utils/types";
 import { modalStyle } from "../../static/styles";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 
 
@@ -47,7 +49,7 @@ export default function login() {
     const renderUsers = () => {
         if (userList) {
             return userList.map((user, index) => (
-                <UserMask user={user} key={index} />
+                <UserMask user={user} key={index} notify={notify} />
             ))
         } else {
             return null
@@ -59,8 +61,12 @@ export default function login() {
             <ToastContainer />
             <Box sx={{ width: "100%", flex: "1", paddingTop: 20, display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <Typography mb={2} variant="h2">Wer schaut gerade?</Typography>
-                <Box display="flex" gap={2}>
+                <Box display="flex" alignItems="center" gap={2}>
+                    <Button variant="outlined" sx={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+                        <ArrowBackIosNewIcon sx={{ fontSize: "50px"}} />
+                    </Button>
                     {renderUsers()}
+                    <ArrowForwardIosIcon sx={{ fontSize: "50px", marginBottom: "30px", "&:hover": {cursor: "pointer", scale: "1.1", transition: "transform .2s;"} }} />
                 </Box>
                 <Typography mt={3} mb={1}>Noch keinen Account? Werde Teil der Crew.</Typography>
                 <Button onClick={handleOpen}
@@ -76,7 +82,7 @@ export default function login() {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={modalStyle}>
-                    <NewUserModal notify={notify} />
+                    <NewUserModal setUserList={setUserList} notify={notify} />
                 </Box>
             </Modal>
         </>

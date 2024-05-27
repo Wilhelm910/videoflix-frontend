@@ -8,10 +8,11 @@ import UserLogin from "../auth/UserLogin";
 
 type UserMaskProps = {
     user: UserProps
+    notify: (message: string) => void
 }
 
 
-export default function UserMask({ user }: UserMaskProps) {
+export default function UserMask({ user, notify }: UserMaskProps) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -40,7 +41,7 @@ export default function UserMask({ user }: UserMaskProps) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={modalStyle}>
-                    <UserLogin />
+                    <UserLogin username={user.username} notify={notify} />
                 </Box>
             </Modal>
         </Box>
