@@ -3,6 +3,7 @@ import './App.css'
 import Login from './components/auth/Login'
 import Home from './pages/Home'
 import { createTheme, ThemeProvider } from '@mui/material'
+import EmailVerification from './components/auth/EmailVerification'
 
 
 
@@ -25,6 +26,7 @@ function App() {
           <Routes>
             <Route path="/login/" element={<Login />} />
             <Route path="/home/" element={<Home />} />
+            <Route path="/email-verification/" element={<EmailVerification />} />
           </Routes>
         </Router>
       </ThemeProvider>

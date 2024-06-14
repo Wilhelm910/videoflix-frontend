@@ -42,15 +42,18 @@ export default function NewUserModal({ notify, setUserList }: NewUserModalProps)
         if (confirmPassword === user.password) {
             const username = `${user.first_name.toLowerCase()}.${user.last_name.toLowerCase()}`;
             try {
-                let response = await fetch(`${BASE_URL}/auth/`, {
+                let response = await fetch(`${BASE_URL}/register/`, {
                     method: "POST",
                     headers: {
                         "content-type": "application/json"
                     },
-                    body: JSON.stringify({ ...user, username })
+                   // body: JSON.stringify({ ...user, username })
+                    body: JSON.stringify(user)
                 })
                 if (response.ok) {
-                    const newUser = { ...user, username }
+                   // const newUser = { ...user, username }
+                   //  const newUser = { user }
+                    const newUser = await response.json();
                     setUserList(prev => [...prev, newUser])
                     setUser(initialUserData)
                     setConfirmPassword("")
