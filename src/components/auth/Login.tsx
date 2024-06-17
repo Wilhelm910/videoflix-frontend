@@ -29,7 +29,7 @@ export default function login() {
     useEffect(() => {
         const loadAllUsers = async () => {
             try {
-                let response = await fetch(`${BASE_URL}/register/`, {
+                let response = await fetch(`${BASE_URL}/get-all-users/`, {
                     method: "GET",
                     headers: {
                         "content-type": "application/json"

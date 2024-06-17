@@ -4,24 +4,25 @@ import { BASE_URL } from "../../static/api";
 import { useNavigate } from "react-router-dom";
 
 type UserProps = {
-    username: string
+    email: string
     password: string
 }
 
-const initialUserData = (username: string): UserProps => ({
-    username: username,
+const initialUserData = (email: string): UserProps => ({
+    email: email,
     password: ""
 })
 
 type UserLoginProps = {
-    username: string
+    is_verified: boolean
+    email: string
     notify: (message: string) => void
 }
 
-export default function UserLogin({ username, notify }: UserLoginProps) {
-    const [user, setUser] = useState<UserProps>(initialUserData(username))
-    const navigate = useNavigate()
 
+export default function UserLogin({ is_verified, email, notify }: UserLoginProps) {
+    const [user, setUser] = useState<UserProps>(initialUserData(email))
+    const navigate = useNavigate()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setUser(prev => ({
@@ -32,28 +33,30 @@ export default function UserLogin({ username, notify }: UserLoginProps) {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        try {
-            let response = await fetch(`${BASE_URL}/login/`, {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json"
-                },
-                body: JSON.stringify(user)
-            })
-            let data = await response.json()
-            if (response.ok) {
-                sessionStorage.setItem("token", data.token)
-                setUser(initialUserData(username))
-                navigate("/home/")
-            } else {
-                console.log(response)
-                notify("Falsches Passwort")
+        if (is_verified == true) {
+            try {
+                let response = await fetch(`${BASE_URL}/login/`, {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify(user)
+                })
+                let data = await response.json()
+                if (response.ok) {
+                    sessionStorage.setItem("token", data.token)
+                    setUser(initialUserData(email))
+                    navigate("/home/")
+                } else {
+                    console.log(response)
+                    notify("Falsches Passwort")
+                }
+            } catch (error) {
+                console.log(error)
             }
-        } catch (error) {
-            console.log(error)
+        } else {
+            notify("Bitte verifiziere deine Email.")
         }
-
-
     }
 
 

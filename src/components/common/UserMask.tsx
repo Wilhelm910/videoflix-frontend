@@ -27,13 +27,16 @@ export default function UserMask({ user, notify }: UserMaskProps) {
     }
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="center">
+        <Box display="flex" flexDirection="column" alignItems="center" minHeight="250px">
             <Box onClick={handleOpen} borderRadius={2} border="2px solid black"
                 sx={{ "&:hover": { borderColor: "rgb(237, 232, 232);", cursor: 'pointer', transform: "scale(1.01)", transition: "transform .2s;" } }}
                 width="200px" height="200px" bgcolor={getRandomColor()}>
                 <SentimentSatisfiedAltIcon sx={{ color: getRandomColor(), width: "100%", height: "100%" }} />
             </Box>
-            <Typography mt={1}>{user.username}</Typography>
+            {user.first_name ? (
+                <Typography mt={1}>{user.first_name} {user.last_name}</Typography>
+            ) : (<Typography>{user.email}</Typography>)}
+
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -41,7 +44,7 @@ export default function UserMask({ user, notify }: UserMaskProps) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={modalStyle}>
-                    <UserLogin username={user.username} notify={notify} />
+                    <UserLogin is_verified={user.is_verified} email={user.email} notify={notify} />
                 </Box>
             </Modal>
         </Box>
