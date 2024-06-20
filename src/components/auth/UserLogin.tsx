@@ -35,6 +35,7 @@ export default function UserLogin({ is_verified, email, notify }: UserLoginProps
         e.preventDefault()
         if (is_verified == true) {
             try {
+                console.log(user)
                 let response = await fetch(`${BASE_URL}/login/`, {
                     method: "POST",
                     headers: {
