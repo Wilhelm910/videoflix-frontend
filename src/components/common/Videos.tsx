@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { BASE_URL } from "../../static/api"
-import { Box } from "@mui/material"
+import { Box, Button } from "@mui/material"
+import Video from "./Video"
 
 export default function Videos() {
     const [videoList, setVideoList] = useState()
@@ -24,26 +25,36 @@ export default function Videos() {
         getVideos()
 
 
+
     }, [])
 
 
-    const renderVideos = videoList?.map((video) => {
-        return (
-            <Box key={video.id}>
-                <div>{video.title}</div>
-                <video width="320" height="240" controls>
-                    <source src={`${BASE_URL}/${video.video_file}`} />
-                    Your browser does not support the video tag.
-                </video>
-
-            </Box>
-        )
-    })
+    // const renderVideos = videoList?.map((video) => {
+    //     return (
+    //         <Video video={video} />
+    //         //     <Box key={video.id}>
+    //         //         <div>{video.title}</div>
+    //         //         <video width="320" height="240" controls>
+    //         //             <source src={`${BASE_URL}/${video.video_file}`} type="video/mp4" />
+    //         //             Your browser does not support the video tag.
+    //         //         </video>
+    //         //         <Button variant="contained">Original</Button>
+    //         //         <Button variant="contained">480p</Button>
+    //         //     </Box>
+    //         // 
+    //     )
+    // })
 
 
     return (
         <>
-            {renderVideos}
+            {/* {renderVideos} */}
+            {videoList?.map((video) => {
+                return (
+                    <Video key={video.id} video={video} />
+                )
+            })}
+
         </>
     )
 }
