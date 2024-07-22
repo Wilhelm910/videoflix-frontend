@@ -4,6 +4,12 @@ import { useNavigate } from "react-router-dom";
 import Videos from "../components/common/Videos";
 
 
+
+const containerStyling = {
+  padding: "0 40px"
+}
+
+
 export default function Home() {
   const navigate = useNavigate()
 
@@ -19,8 +25,10 @@ export default function Home() {
 
   return (
     <>
-      <Header />
-      <Videos />
+      <div style={containerStyling}>
+        <Header />
+        <Videos />
+      </div>
     </>
   )
 }

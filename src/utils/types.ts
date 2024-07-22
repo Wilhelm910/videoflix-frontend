@@ -5,3 +5,16 @@ export type UserProps = {
     password: string
     is_verified: boolean
 }
+
+
+export type VideoDetails = {
+    id: number
+    title: string
+    description: string
+    created_at: string
+    video_file: string
+    video_file_480p?: string
+    thumbnail: string
+    categories?: string[]
+    favourite?: boolean
+}

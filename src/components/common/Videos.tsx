@@ -18,7 +18,6 @@ export default function Videos() {
             }
             )
             const data = await response.json()
-            console.log(data)
             setVideoList(data)
         }
 
@@ -29,32 +28,16 @@ export default function Videos() {
     }, [])
 
 
-    // const renderVideos = videoList?.map((video) => {
-    //     return (
-    //         <Video video={video} />
-    //         //     <Box key={video.id}>
-    //         //         <div>{video.title}</div>
-    //         //         <video width="320" height="240" controls>
-    //         //             <source src={`${BASE_URL}/${video.video_file}`} type="video/mp4" />
-    //         //             Your browser does not support the video tag.
-    //         //         </video>
-    //         //         <Button variant="contained">Original</Button>
-    //         //         <Button variant="contained">480p</Button>
-    //         //     </Box>
-    //         // 
-    //     )
-    // })
-
-
     return (
         <>
-            {/* {renderVideos} */}
-            {videoList?.map((video) => {
-                return (
-                    <Video key={video.id} video={video} />
-                )
-            })}
-
+            <div style={{marginTop: "16px"}}>
+                {/* {renderVideos} */}
+                {videoList?.map((video) => {
+                    return (
+                        <Video key={video.id} video={video} />
+                    )
+                })}
+            </div>
         </>
     )
 }

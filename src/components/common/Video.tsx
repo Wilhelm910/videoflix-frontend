@@ -1,7 +1,10 @@
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Modal, Typography } from "@mui/material";
 import { BASE_URL } from "../../static/api";
 import { useState } from "react";
 import VideoManager from "./VideoManager";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { VideoDetails } from "../../utils/types";
 
 
 const style = {
@@ -12,45 +15,108 @@ const style = {
     boxShadow: 24,
 };
 
-// type ResProps = "original" | "480p";
+const boxStyling = {
+    maxWidth: "320px",
+    padding: "20px",
+    position: "relative", // Für absolute Positionierung von .textContent
+    transition: "transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease",
+    "&:hover": {
+        cursor: "pointer",
+        transform: "scale(1.2)",
+        backgroundColor: "#242424",
+        boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+        transitionDelay: "0.2s",
+        zIndex: "2",
+    },
+    "&:hover .textContent": {
+        display: "flex",
+        transform: "translateY(0)",
+        transitionDelay: "0.5s"
+    }
+}
+
+
+const textStyling = {
+    transform: "translateY(20px)",
+    transition: "opacity 0.3s, transform 0.3s",
+    position: "absolute",
+    backgroundColor: "#242424",
+    width: "100%",
+    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+    padding: "20px",
+    display: "none",
+    justifyContent: "space-between"
+};
+
 
 type VideoProps = {
-    video: Video
+    video: VideoDetails
 }
 
-type Video = {
-    id: number
-    title: string
-    description: string
-    created_at: string
-    video_file: string
-    video_file_480p?: string
-    thumbnail: string
+type FavouriteProps = {
+    favourite: boolean
+    videoId: number
 }
+
+// type Video = {
+//     id: number
+//     title: string
+//     description: string
+//     created_at: string
+//     video_file: string
+//     video_file_480p?: string
+//     thumbnail: string
+// }
 
 export default function Video({ video }: VideoProps) {
     const [open, setOpen] = useState(false);
-    // const [testResolution, setTestResolution] = useState("")
-
-    // const handleOpen = (res: ResProps) => {
-    //     setTestResolution(res)
-    //     setOpen(true)
-    // };
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true)
+    const [favourite, setFavourite] = useState(video?.favourite)
 
-    console.log(video)
-    console.log(`${BASE_URL}${video.thumbnail}`)
+
+    const handleFavourite = async (favourite, videoId): FavouriteProps => {
+        console.log(sessionStorage.getItem("token"))
+        try {
+            const response = await fetch(`${BASE_URL}/video/${videoId}/update-favourite/`, {
+                method: "PUT",
+                headers: {
+                    "Content-type": "application/json",
+                    "Authorization": `Token ${sessionStorage.getItem("token")}`
+                },
+                body: JSON.stringify({ favourite })
+            })
+            if (!response.ok) {
+                throw new Error(`Error: ${response.statusText}`);
+            } else {
+                setFavourite(favourite)
+                const updatedVideo = await response.json();
+                console.log('Updated Video:', updatedVideo);
+                console.log(favourite)
+                console.log(videoId)
+            }
+
+        } catch (error) {
+            console.error('Error updating favourite:', error);
+        }
+    }
+
 
     return (
         <>
-            {/* <div>
-                <Button variant="contained" onClick={() => handleOpen("original")}>Original</Button>
-                <Button variant="contained" onClick={() => handleOpen("480p")}>480p</Button>
-            </div> */}
-            <img width={320} src={`${BASE_URL}${video.thumbnail}`} alt="Video Thumbnail" onClick={handleOpen} />
-            <Typography>{video.title}</Typography>
-            <Typography>{video.description}</Typography>
+            <Box sx={boxStyling}>
+                <img width={320} src={`${BASE_URL}${video.thumbnail}`} alt="Video Thumbnail" onClick={handleOpen} />
+                <Box className="textContent" sx={textStyling}>
+                    <Box>
+                        <Typography variant="h6">{video.title}</Typography>
+                        <Typography variant="body2">{video.description}</Typography>
+                    </Box>
+                    <Box>
+                        {favourite && <FavoriteIcon onClick={() => handleFavourite(false, video.id)} />}
+                        {!favourite && <FavoriteBorderIcon onClick={() => handleFavourite(true, video.id)} />}
+                    </Box>
+                </Box>
+            </Box>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -58,8 +124,7 @@ export default function Video({ video }: VideoProps) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    {/* <VideoManager testResolution={testResolution} video_id={video.id} /> */}
-                    <VideoManager video_id={video.id} /> 
+                    <VideoManager video_id={video.id} />
                 </Box>
             </Modal>
         </>

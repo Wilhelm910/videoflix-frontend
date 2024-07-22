@@ -1,24 +1,27 @@
 import { Box, Button } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { BASE_URL } from '../../static/api';
+import { VideoDetails } from '../../utils/types';
 
 
 type ResProps = "original" | "480p" | null;
 
 type VideoManagerProps = {
     video_id: number
-    testResolution: string
 }
 
-export default function VideoManager({ video_id, testResolution }: VideoManagerProps) {
+
+
+
+export default function VideoManager({ video_id }: VideoManagerProps) {
     const [resolution, setResolution] = useState<ResProps>(null);
     const [videoSrc, setVideoSrc] = useState("");
     const [videoSrc2, setVideoSrc2] = useState("")
+    const [videoData, setVideoData] = useState<VideoDetails | null>(null)
     const handleClick = (res: ResProps) => {
         setResolution(res);
     }
 
-    console.log(video_id)
 
 
     useEffect(() => {
@@ -27,23 +30,22 @@ export default function VideoManager({ video_id, testResolution }: VideoManagerP
             const response = await fetch(`${BASE_URL}/video/${video_id}/`, {
                 method: "GET",
                 headers: {
-                    "content-type": "application/json"
+                    "Content-type": "application/json"
                 }
             })
             const data = await response.json()
-            console.log(`${BASE_URL}${data.video_file}`)
             setVideoSrc(`${BASE_URL}${data.video_file}`)
+            setVideoData(data)
         }
 
         const get480p = async () => {
             const response480p = await fetch(`${BASE_URL}/video/${video_id}/480p/`, {
                 method: "GET",
                 headers: {
-                    "content-type": "application/json"
+                    "Content-type": "application/json"
                 }
             })
             const data480p = await response480p.json()
-            console.log(`${BASE_URL}${data480p.video_file_480p}`)
             setVideoSrc2(`${BASE_URL}${data480p.video_file_480p}`)
         }
 
@@ -53,10 +55,11 @@ export default function VideoManager({ video_id, testResolution }: VideoManagerP
 
     }, [video_id])
 
+    console.log(videoData)
 
 
     return (
-        <Box display="flex">
+        <Box display="flex" flexDirection="column" alignItems="center">
             {resolution === "original" && <video width="320" height="240" controls>
                 <source src={videoSrc} type="video/mp4" />
                 Your browser does not support the video tag.
@@ -65,16 +68,11 @@ export default function VideoManager({ video_id, testResolution }: VideoManagerP
                 <source src={videoSrc2} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>}
-            <Button variant="contained" onClick={() => handleClick("original")}>Original</Button>
-            <Button variant="contained" onClick={() => handleClick("480p")}>480p</Button>
-            {testResolution === "original" && <video width="320" height="240" controls>
-                <source src={videoSrc} type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>}
-            {testResolution === "480p" && <video width="320" height="240" controls>
-                <source src={videoSrc2} type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>}
+            {resolution === null &&
+                <img width={320} src={`${BASE_URL}${videoData?.thumbnail}`} alt="Video Thumbnail"/>
+            }
+            <Button sx={{ width: "150px", marginBottom: "4px" }} variant="contained" onClick={() => handleClick("original")}>Original</Button>
+            <Button sx={{ width: "150px" }} variant="contained" onClick={() => handleClick("480p")}>480p</Button>
         </Box>
     )
 }
