@@ -2,14 +2,23 @@ import { Box, Button } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { BASE_URL } from '../../static/api';
 import { VideoDetails } from '../../utils/types';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 
 type ResProps = "original" | "480p" | null;
+
+type SettingsProps = true | false
 
 type VideoManagerProps = {
     video_id: number
 }
 
+
+const iconStyling = {
+    "&:hover": {
+        cursor: "pointer"
+    }
+}
 
 
 
@@ -18,8 +27,14 @@ export default function VideoManager({ video_id }: VideoManagerProps) {
     const [videoSrc, setVideoSrc] = useState("");
     const [videoSrc2, setVideoSrc2] = useState("")
     const [videoData, setVideoData] = useState<VideoDetails | null>(null)
+    const [settings, setSettings] = useState<SettingsProps>(false)
     const handleClick = (res: ResProps) => {
         setResolution(res);
+    }
+
+    const handleSettings = () => {
+        setSettings(prevSettings => !prevSettings);
+
     }
 
 
@@ -59,7 +74,7 @@ export default function VideoManager({ video_id }: VideoManagerProps) {
 
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="center">
+        <Box display="flex" flexDirection="column" alignItems="flex-end">
             {resolution === "original" && <video width="320" height="240" controls>
                 <source src={videoSrc} type="video/mp4" />
                 Your browser does not support the video tag.
@@ -69,10 +84,15 @@ export default function VideoManager({ video_id }: VideoManagerProps) {
                 Your browser does not support the video tag.
             </video>}
             {resolution === null &&
-                <img width={320} src={`${BASE_URL}${videoData?.thumbnail}`} alt="Video Thumbnail"/>
+                <img width={320} src={`${BASE_URL}${videoData?.thumbnail}`} alt="Video Thumbnail" />
             }
-            <Button sx={{ width: "150px", marginBottom: "4px" }} variant="contained" onClick={() => handleClick("original")}>Original</Button>
-            <Button sx={{ width: "150px" }} variant="contained" onClick={() => handleClick("480p")}>480p</Button>
+            <SettingsIcon sx={iconStyling} onClick={handleSettings} />
+            {settings && (
+                <Box width="100%" display="flex" alignItems="center" justifyContent="space-between">
+                    <Button sx={{ width: "150px" }} variant="contained" onClick={() => handleClick("original")}>Original</Button>
+                    <Button sx={{ width: "150px" }} variant="contained" onClick={() => handleClick("480p")}>480p</Button>
+                </Box>
+            )}
         </Box>
     )
 }

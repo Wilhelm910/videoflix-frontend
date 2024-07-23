@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { BASE_URL } from "../../static/api"
-import { Box, Button } from "@mui/material"
+import { Box, Button, Typography } from "@mui/material"
 import Video from "./Video"
+import { VideoDetails } from "../../utils/types"
 
 export default function Videos() {
     const [videoList, setVideoList] = useState()
+    const [videoGroups, setVideoGroups] = useState<string[]>([])
 
 
     useEffect(() => {
@@ -19,22 +21,37 @@ export default function Videos() {
             )
             const data = await response.json()
             setVideoList(data)
+            getVideoGroups(data)
         }
-
         getVideos()
-
-
-
     }, [])
+
+
+    const getVideoGroups = (videos: VideoDetails[]) => {
+        let groupSet: string[] = []
+        videos?.map((video) => {
+            if (video.group) {
+                groupSet.push(video.group);
+            }
+        })
+        setVideoGroups(groupSet)
+    }
+  
+    console.log(videoList)
 
 
     return (
         <>
-            <div style={{marginTop: "16px"}}>
+            <div style={{ marginTop: "16px" }}>
                 {/* {renderVideos} */}
                 {videoList?.map((video) => {
                     return (
-                        <Video key={video.id} video={video} />
+                        <>
+                            <Box>
+                                <Typography></Typography>
+                            </Box>
+                            <Video key={video.id} video={video} />
+                        </>
                     )
                 })}
             </div>

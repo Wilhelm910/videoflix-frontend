@@ -12,14 +12,17 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    boxShadow: 24,
+    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+    backgroundColor: "#242424",
 };
 
 const boxStyling = {
+    marginBottom: "-120px",
     maxWidth: "320px",
+    height: "280px",
     padding: "20px",
-    position: "relative", // Für absolute Positionierung von .textContent
-    transition: "transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease",
+    // position: "relative", // Für absolute Positionierung von .textContent
+    transition: "transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, flex 0.3s ease",
     "&:hover": {
         cursor: "pointer",
         transform: "scale(1.2)",
@@ -31,7 +34,7 @@ const boxStyling = {
     "&:hover .textContent": {
         display: "flex",
         transform: "translateY(0)",
-        transitionDelay: "0.5s"
+        transitionDelay: "0.2s"
     }
 }
 
@@ -39,11 +42,11 @@ const boxStyling = {
 const textStyling = {
     transform: "translateY(20px)",
     transition: "opacity 0.3s, transform 0.3s",
-    position: "absolute",
-    backgroundColor: "#242424",
-    width: "100%",
-    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-    padding: "20px",
+    // position: "absolute",
+    // backgroundColor: "#242424",
+    // width: "100%",
+    // boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+    // padding: "20px",
     display: "none",
     justifyContent: "space-between"
 };
@@ -109,7 +112,7 @@ export default function Video({ video }: VideoProps) {
                 <Box className="textContent" sx={textStyling}>
                     <Box>
                         <Typography variant="h6">{video.title}</Typography>
-                        <Typography variant="body2">{video.description}</Typography>
+                        <Typography variant="body2">{video.description.slice(0,80) + "..."}</Typography>
                     </Box>
                     <Box>
                         {favourite && <FavoriteIcon onClick={() => handleFavourite(false, video.id)} />}
@@ -120,8 +123,6 @@ export default function Video({ video }: VideoProps) {
             <Modal
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
                     <VideoManager video_id={video.id} />
