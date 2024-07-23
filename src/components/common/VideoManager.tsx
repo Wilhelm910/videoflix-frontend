@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { BASE_URL } from '../../static/api';
 import { VideoDetails } from '../../utils/types';
@@ -15,6 +15,7 @@ type VideoManagerProps = {
 
 
 const iconStyling = {
+    padding: "4px",
     "&:hover": {
         cursor: "pointer"
     }
@@ -74,22 +75,26 @@ export default function VideoManager({ video_id }: VideoManagerProps) {
 
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="flex-end">
-            {resolution === "original" && <video width="320" height="240" controls>
-                <source src={videoSrc} type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>}
-            {resolution === "480p" && <video width="320" height="240" controls>
-                <source src={videoSrc2} type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>}
-            {resolution === null &&
-                <img width={320} src={`${BASE_URL}${videoData?.thumbnail}`} alt="Video Thumbnail" />
-            }
+        <Box display="flex" flexDirection="column" alignItems="flex-end" borderRadius={2}>
+            <Box display="flex" flexDirection="column" alignItems="center">
+                <Typography variant='h6' mt={2} mb={2}>{videoData?.title}</Typography>
+                {resolution === "original" && <video width="100%" controls>
+                    <source src={videoSrc} type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>}
+                {resolution === "480p" && <video width="100%" controls>
+                    <source src={videoSrc2} type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>}
+                {resolution === null &&
+                    <img width="100%" src={`${BASE_URL}${videoData?.thumbnail}`} alt="Video Thumbnail" />
+                }
+                <Typography p={2}>{videoData?.description}</Typography>
+            </Box>
             <SettingsIcon sx={iconStyling} onClick={handleSettings} />
             {settings && (
-                <Box width="100%" display="flex" alignItems="center" justifyContent="space-between">
-                    <Button sx={{ width: "150px" }} variant="contained" onClick={() => handleClick("original")}>Original</Button>
+                <Box width="100%" display="flex" alignItems="center" justifyContent="center" mb={2}>
+                    <Button sx={{ width: "150px", mr: "4px" }} variant="contained" onClick={() => handleClick("original")}>Original</Button>
                     <Button sx={{ width: "150px" }} variant="contained" onClick={() => handleClick("480p")}>480p</Button>
                 </Box>
             )}

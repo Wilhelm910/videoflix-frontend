@@ -19,7 +19,7 @@ const style = {
 const boxStyling = {
     marginBottom: "-120px",
     maxWidth: "320px",
-    height: "280px",
+    height: "300px",
     padding: "20px",
     // position: "relative", // Für absolute Positionierung von .textContent
     transition: "transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, flex 0.3s ease",
@@ -32,9 +32,11 @@ const boxStyling = {
         zIndex: "2",
     },
     "&:hover .textContent": {
-        display: "flex",
+        //display: "flex",
         transform: "translateY(0)",
-        transitionDelay: "0.2s"
+        transitionDelay: "0.2s",
+        opacity: "1",
+        visibility: "visible",
     }
 }
 
@@ -47,8 +49,12 @@ const textStyling = {
     // width: "100%",
     // boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
     // padding: "20px",
-    display: "none",
-    justifyContent: "space-between"
+    //display: "none",
+    justifyContent: "space-between",
+    opacity: "0",
+    visibility: "hidden",
+    dispaly: "flex",
+    flexDirection: "row"
 };
 
 
@@ -112,7 +118,7 @@ export default function Video({ video }: VideoProps) {
                 <Box className="textContent" sx={textStyling}>
                     <Box>
                         <Typography variant="h6">{video.title}</Typography>
-                        <Typography variant="body2">{video.description.slice(0,80) + "..."}</Typography>
+                        <Typography variant="body2">{video.description.slice(0, 80) + "..."}</Typography>
                     </Box>
                     <Box>
                         {favourite && <FavoriteIcon onClick={() => handleFavourite(false, video.id)} />}
