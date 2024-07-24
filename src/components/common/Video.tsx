@@ -60,31 +60,18 @@ const textStyling = {
 
 type VideoProps = {
     video: VideoDetails
+    onFavouriteChange: (videoId: number, favourite: boolean) => void
 }
 
-type FavouriteProps = {
-    favourite: boolean
-    videoId: number
-}
 
-// type Video = {
-//     id: number
-//     title: string
-//     description: string
-//     created_at: string
-//     video_file: string
-//     video_file_480p?: string
-//     thumbnail: string
-// }
-
-export default function Video({ video }: VideoProps) {
+export default function Video({ video, onFavouriteChange }: VideoProps) {
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true)
     const [favourite, setFavourite] = useState(video?.favourite)
 
 
-    const handleFavourite = async (favourite: FavouriteProps, videoId: FavouriteProps) => {
+    const handleFavourite = async (favourite: boolean, videoId: number) => {
         console.log(sessionStorage.getItem("token"))
         try {
             const response = await fetch(`${BASE_URL}/video/${videoId}/update-favourite/`, {
@@ -99,10 +86,9 @@ export default function Video({ video }: VideoProps) {
                 throw new Error(`Error: ${response.statusText}`);
             } else {
                 setFavourite(favourite)
+                onFavouriteChange(video.id, favourite);
                 const updatedVideo = await response.json();
                 console.log('Updated Video:', updatedVideo);
-                console.log(favourite)
-                console.log(videoId)
             }
 
         } catch (error) {

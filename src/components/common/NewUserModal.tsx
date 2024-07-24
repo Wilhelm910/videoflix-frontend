@@ -5,8 +5,6 @@ import { UserProps } from "../../utils/types";
 
 
 
-
-
 const initialUserData: UserProps = {
     username: "",
     first_name: "",
@@ -17,7 +15,7 @@ const initialUserData: UserProps = {
 
 type NewUserModalProps = {
     notify: (message: string) => void
-    setUserList: (updateFn: (prevUserList: UserProps[]) => UserProps[]) => void;
+    setUserList: React.Dispatch<React.SetStateAction<UserProps[] | undefined>>;
 }
 
 
@@ -54,7 +52,7 @@ export default function NewUserModal({ notify, setUserList }: NewUserModalProps)
                    // const newUser = { ...user, username }
                    //  const newUser = { user }
                     const newUser = await response.json();
-                    setUserList(prev => [...prev, newUser])
+                    setUserList(prev => (prev ? [...prev, newUser] : [newUser]))
                     setUser(initialUserData)
                     setConfirmPassword("")
                     notify("Benutzer erfolgreich angelegt")

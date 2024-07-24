@@ -3,7 +3,7 @@ export type UserProps = {
     last_name: string
     email: string
     password: string
-    is_verified: boolean
+    is_verified?: boolean
 }
 
 
