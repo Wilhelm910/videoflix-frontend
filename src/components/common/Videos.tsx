@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
 import { BASE_URL } from "../../static/api"
-import { Box, Typography } from "@mui/material"
+import { Box, IconButton, Typography } from "@mui/material"
 import Video from "./Video"
 import { VideoDetails } from "../../utils/types"
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 
 type VideosProps = {
@@ -11,10 +13,41 @@ type VideosProps = {
 
 
 
+
+
 export default function Videos({ searchTerm }: VideosProps) {
     const [videoList, setVideoList] = useState<VideoDetails[]>()
     const [videoGroups, setVideoGroups] = useState<string[]>([])
     const [filteredVideos, setFilteredVideos] = useState<VideoDetails[]>()
+    const [visibleStart, setVisibleStart] = useState(0);
+    const [itemsPerPage, setItemsPerPage] = useState(4); // Initialwert
+
+
+    const ArrowBackStyle = {
+        display: `${visibleStart == 0} ? none : flex`,
+        visibility: `${visibleStart == 0} ? hidden : visible`,
+        backgroundColor: "red"
+    }
+
+
+    const updateItemsPerPage = () => {
+        const screenWidth = window.innerWidth;
+        if (screenWidth >= 1600) {
+            setItemsPerPage(4);
+        } else if (screenWidth >= 1200) {
+            setItemsPerPage(3);
+        } else if (screenWidth >= 800) {
+            setItemsPerPage(2);
+        } else {
+            setItemsPerPage(1);
+        }
+    };
+
+    useEffect(() => {
+        updateItemsPerPage();
+        window.addEventListener("resize", updateItemsPerPage);
+        return () => window.removeEventListener("resize", updateItemsPerPage);
+    }, []);
 
 
     useEffect(() => {
@@ -46,7 +79,6 @@ export default function Videos({ searchTerm }: VideosProps) {
             setFilteredVideos(filtered);
         };
         filterVideos();
-        console.log(filteredVideos)
     }, [searchTerm, videoList])
 
 
@@ -60,6 +92,33 @@ export default function Videos({ searchTerm }: VideosProps) {
         setVideoGroups(groupSet)
     }
 
+
+    const handleNext = () => {
+        if (filteredVideos) {
+            if (visibleStart + itemsPerPage < filteredVideos.length) {
+                setVisibleStart(visibleStart + itemsPerPage);
+            }
+        }
+
+    };
+
+    const handlePrev = () => {
+        if (visibleStart - itemsPerPage >= 0) {
+            setVisibleStart(visibleStart - itemsPerPage);
+        }
+    };
+
+    console.log(itemsPerPage)
+    console.log("visible start: " + visibleStart)
+    console.log("filteded Videos " + filteredVideos?.length)
+    if (filteredVideos && visibleStart + itemsPerPage >= filteredVideos.length) {
+        console.log("TEST")
+    }
+
+    const isPrevDisabled = visibleStart === 0;
+    const isNextDisabled = filteredVideos && visibleStart + itemsPerPage >= filteredVideos.length;
+
+
     return (
         <>
             {videoGroups.map((group) => {
@@ -71,33 +130,51 @@ export default function Videos({ searchTerm }: VideosProps) {
                                 return (
                                     <>
                                         {video.group === group && !video.favourite && <Video key={video.id} video={video} />}
-                                        {video.group === group && video.favourite &&
-                                            <Box>
-                                                <Typography color="rgb(237, 232, 232);" mt={5}>Hier erscheinen bald neue Inhalte für dich</Typography>
-                                            </Box>}
+                                        {video.group === group && video.favourite && <Box><Typography color="rgb(237, 232, 232);" mt={5}>Hier erscheinen bald neue Inhalte für dich</Typography></Box>}
                                     </>
                                 )
                             })}
+                            {<ArrowForwardIosIcon />}
                         </Box>
                     </Box>
                 )
             })}
-            <Box pb={2} width="100%" borderBottom="1px solid rgb(237, 232, 232);">
+            {/* <Box pb={2} width="100%" borderBottom="1px solid rgb(237, 232, 232);">
                 <Typography variant="h5" color="rgb(237, 232, 232);" mt={2} mb={-2}>Deine Favoriten</Typography>
-                <Box display="flex">
+                <Box display="flex" alignItems="center" flexWrap="wrap" flex="1">
                     {filteredVideos?.map((video: VideoDetails) => {
                         return (
                             <>
-                                {video.favourite &&
-
-                                    <Video key={video.id} video={video} />
-
-                                }
+                                {video.favourite && <Video key={video.id} video={video} />}
                             </>
                         )
                     })}
+                       { <ArrowForwardIosIcon />}
                 </Box>
-            </Box>
+            </Box> */}
+            <Box pb={2} width="100%" borderBottom="1px solid rgb(237, 232, 232);">
+                <Typography variant="h5" color="rgb(237, 232, 232);" mt={2} mb={-2}>Deine Favoriten</Typography>
+                <Box display="flex" alignItems="center">
+                    {/* <IconButton onClick={handlePrev} sx={ArrowBackStyle} disabled={visibleStart === 0}>
+                        <ArrowBackIosIcon sx={ArrowBackStyle}  />
+                    </IconButton> */}
+                    <IconButton onClick={handlePrev} sx={{ display: isPrevDisabled ? 'none' : 'flex', color: "rgb(237, 232, 232)", transition: "transform 0.3s ease", "&:hover": { transform: "scale(1.3)" } }} disabled={isPrevDisabled}>
+                        <ArrowBackIosIcon />
+                    </IconButton>
+                    <Box display="flex" flex="1">
+                        {filteredVideos?.filter(video => video.favourite)
+                            .slice(visibleStart, visibleStart + itemsPerPage)
+                            .map(video => (
+                                <Video key={video.id} video={video} />
+                            ))}
+                    </Box>
+                    <IconButton onClick={handleNext} sx={{
+                        display: isNextDisabled ? 'none' : 'flex', color: "rgb(237, 232, 232)", transition: "transform 0.3s ease", "&:hover": { transform: "scale(1.3)" },
+                    }} disabled={isNextDisabled}>
+                        < ArrowForwardIosIcon />
+                    </IconButton>
+                </Box>
+            </Box >
         </>
     )
 }
