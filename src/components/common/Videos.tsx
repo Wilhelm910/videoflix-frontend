@@ -4,9 +4,17 @@ import { Box, Typography } from "@mui/material"
 import Video from "./Video"
 import { VideoDetails } from "../../utils/types"
 
-export default function Videos() {
+
+type VideosProps = {
+    searchTerm: string
+}
+
+
+
+export default function Videos({ searchTerm }: VideosProps) {
     const [videoList, setVideoList] = useState<VideoDetails[]>()
     const [videoGroups, setVideoGroups] = useState<string[]>([])
+    const [filteredVideos, setFilteredVideos] = useState<VideoDetails[]>()
 
 
     useEffect(() => {
@@ -27,6 +35,21 @@ export default function Videos() {
     }, [])
 
 
+    useEffect(() => {
+        const filterVideos = () => {
+            const filtered = videoList?.filter(video =>
+                video.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                video.categories.some(category =>
+                    category.toLowerCase().includes(searchTerm.toLowerCase())
+                )
+            );
+            setFilteredVideos(filtered);
+        };
+        filterVideos();
+        console.log(filteredVideos)
+    }, [searchTerm, videoList])
+
+
     const getVideoGroups = (videos: VideoDetails[]) => {
         let groupSet: string[] = []
         videos?.map((video) => {
@@ -37,10 +60,6 @@ export default function Videos() {
         setVideoGroups(groupSet)
     }
 
-    console.log(videoList)
-    console.log(videoGroups)
-
-
     return (
         <>
             {videoGroups.map((group) => {
@@ -48,7 +67,7 @@ export default function Videos() {
                     <Box pb={2} width="100%" borderBottom="1px solid rgb(237, 232, 232);">
                         <Typography variant="h5" color="rgb(237, 232, 232);" mt={2} mb={-2}>{group.slice(0, 1).toUpperCase() + group.slice(1)}</Typography>
                         <Box display="flex">
-                            {videoList?.map((video: VideoDetails) => {
+                            {filteredVideos?.map((video: VideoDetails) => {
                                 return (
                                     <>
                                         {video.group === group && !video.favourite && <Video key={video.id} video={video} />}
@@ -63,20 +82,22 @@ export default function Videos() {
                     </Box>
                 )
             })}
-            {videoList?.map((video: VideoDetails) => {
-                return (
-                    <>
-                        {video.favourite &&
+            <Box pb={2} width="100%" borderBottom="1px solid rgb(237, 232, 232);">
+                <Typography variant="h5" color="rgb(237, 232, 232);" mt={2} mb={-2}>Deine Favoriten</Typography>
+                <Box display="flex">
+                    {filteredVideos?.map((video: VideoDetails) => {
+                        return (
                             <>
-                                <Box pb={2} width="100%" borderBottom="1px solid rgb(237, 232, 232);">
-                                    <Typography variant="h5" color="rgb(237, 232, 232);" mt={2} mb={-2}>Deine Favoriten</Typography>
+                                {video.favourite &&
+
                                     <Video key={video.id} video={video} />
-                                </Box>
+
+                                }
                             </>
-                        }
-                    </>
-                )
-            })}
+                        )
+                    })}
+                </Box>
+            </Box>
         </>
     )
 }

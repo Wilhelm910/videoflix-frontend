@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/common/Header";
 import { useNavigate } from "react-router-dom";
 import Videos from "../components/common/Videos";
@@ -12,7 +12,13 @@ const containerStyling = {
 
 export default function Home() {
   const navigate = useNavigate()
+  const [searchTerm, setSearchTerm] = useState<string>("")
 
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const value = event.target.value
+    setSearchTerm(value)
+  }
 
   useEffect(() => {
     const token = sessionStorage.getItem("token")
@@ -26,8 +32,8 @@ export default function Home() {
   return (
     <>
       <div style={containerStyling}>
-        <Header />
-        <Videos />
+        <Header handleSearch={handleSearch} searchTerm={searchTerm} />
+        <Videos searchTerm={searchTerm} />
       </div>
     </>
   )

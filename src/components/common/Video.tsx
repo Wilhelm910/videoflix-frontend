@@ -84,7 +84,7 @@ export default function Video({ video }: VideoProps) {
     const [favourite, setFavourite] = useState(video?.favourite)
 
 
-    const handleFavourite = async (favourite, videoId): FavouriteProps => {
+    const handleFavourite = async (favourite: FavouriteProps, videoId: FavouriteProps) => {
         console.log(sessionStorage.getItem("token"))
         try {
             const response = await fetch(`${BASE_URL}/video/${videoId}/update-favourite/`, {

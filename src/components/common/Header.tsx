@@ -3,8 +3,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../static/api";
 
-export default function Header() {
+
+type HeaderProps = {
+    handleSearch: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+    searchTerm: string
+}
+
+
+export default function Header({ handleSearch, searchTerm }: HeaderProps) {
     const navigate = useNavigate()
+
 
 
     const handleLogout = async () => {
@@ -33,8 +41,6 @@ export default function Header() {
         } catch (error) {
             console.log(error)
         }
-
-
     }
 
 
@@ -53,6 +59,8 @@ export default function Header() {
                         id="outlined-search"
                         label="Suche"
                         type="search"
+                        value={searchTerm}
+                        onChange={handleSearch}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="start">

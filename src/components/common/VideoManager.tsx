@@ -71,8 +71,6 @@ export default function VideoManager({ video_id }: VideoManagerProps) {
 
     }, [video_id])
 
-    console.log(videoData)
-
 
     return (
         <Box display="flex" flexDirection="column" alignItems="flex-end" borderRadius={2}>
