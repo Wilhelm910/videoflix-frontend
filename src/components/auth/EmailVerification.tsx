@@ -5,6 +5,7 @@ import { BASE_URL } from "../../static/api"
 export default function EmailVerification() {
 
     const [verificationStatus, setVerificationStatus] = useState<string>("")
+    const [isRequestSent, setIsRequestSent] = useState<boolean>(false)
     const location = useLocation()
 
 
@@ -13,9 +14,14 @@ export default function EmailVerification() {
         const token = searchParams.get("token")
         console.log(`Token extracted from URL: ${token}`); // Debug-Ausgabe
 
+
+        
+
         const sendVerificationRequest = async () => {
+            if (isRequestSent) return
+            setIsRequestSent(true)
             try {
-                const response = await fetch(`${BASE_URL}/verify-email/${token}`,
+                const response = await fetch(`${BASE_URL}/verify-email/${token}/`,
                     {
                         method: "GET",
                         headers: {
@@ -23,14 +29,12 @@ export default function EmailVerification() {
                         }
                     }
                 )
-                console.log(response)
+                const responseData = await response.json();
+                console.log(`Response Data: ${JSON.stringify(responseData)}`);
                 if (response.ok) {
-                    let data = await response.json()
-                    console.log(data)
-                    console.log("test")
-                    setVerificationStatus("success");
+                    setVerificationStatus("success")
                 } else {
-                    setVerificationStatus("failure");
+                    setVerificationStatus("failure")
                 }
 
             } catch (error) {
@@ -40,14 +44,14 @@ export default function EmailVerification() {
         }
 
 
-        if (token) {
+        if (token && !isRequestSent) {
             sendVerificationRequest()
         } else {
             setVerificationStatus("missing");
         }
 
 
-    }, [location])
+    }, [location, isRequestSent])
 
     let message;
     switch (verificationStatus) {
