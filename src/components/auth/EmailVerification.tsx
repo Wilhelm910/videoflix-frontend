@@ -1,57 +1,127 @@
-import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
-import { BASE_URL } from "../../static/api"
+// import { useEffect, useState } from "react"
+// import { useLocation } from "react-router-dom"
+// import { BASE_URL } from "../../static/api"
 
-export default function EmailVerification() {
+// export default function EmailVerification() {
 
-    const [verificationStatus, setVerificationStatus] = useState<string>("")
-    const [isRequestSent, setIsRequestSent] = useState<boolean>(false)
-    const location = useLocation()
+//     const [verificationStatus, setVerificationStatus] = useState<string>("")
+//     const [isRequestSent, setIsRequestSent] = useState<boolean>(false)
+//     const location = useLocation()
 
 
-    useEffect(() => {
-        const searchParams = new URLSearchParams(location.search)
-        const token = searchParams.get("token")
-        console.log(`Token extracted from URL: ${token}`); // Debug-Ausgabe
+//     useEffect(() => {
+//         const searchParams = new URLSearchParams(location.search)
+//         const token = searchParams.get("token")
+//         console.log(`Token extracted from URL: ${token}`); // Debug-Ausgabe
 
 
         
 
+//         const sendVerificationRequest = async () => {
+//             if (isRequestSent) return
+//             setIsRequestSent(true)
+//             try {
+//                 const response = await fetch(`${BASE_URL}/verify-email/${token}/`,
+//                     {
+//                         method: "GET",
+//                         headers: {
+//                             "content-type": "application/json"
+//                         }
+//                     }
+//                 )
+//                 const responseData = await response.json();
+//                 console.log(`Response Data: ${JSON.stringify(responseData)}`);
+//                 if (response.ok) {
+//                     setVerificationStatus("success")
+//                 } else {
+//                     setVerificationStatus("failure")
+//                 }
+
+//             } catch (error) {
+//                 console.error("Fehler bei der Verifizierung:", error);
+//                 setVerificationStatus("error");
+//             }
+//         }
+
+
+//         if (token && !isRequestSent) {
+//             sendVerificationRequest()
+//         } else {
+//             setVerificationStatus("missing");
+//         }
+
+
+//     }, [location, isRequestSent])
+
+//     let message;
+//     switch (verificationStatus) {
+//         case "success":
+//             message = "E-Mail erfolgreich verifiziert!";
+//             break;
+//         case "failure":
+//             message =
+//                 "Fehler bei der E-Mail-Verifizierung. Bitte versuchen Sie es später erneut.";
+//             break;
+//         case "missing":
+//             message = "Kein Verifizierungstoken gefunden.";
+//             break;
+//         case "error":
+//             message = "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.";
+//             break;
+//         default:
+//             message = "Verifizierung läuft...";
+//     }
+
+
+
+//     return (
+//         <div>{message}</div>
+//     )
+// }
+
+
+import { useEffect, useRef, useState } from "react"
+import { useLocation } from "react-router-dom"
+import { BASE_URL } from "../../static/api"
+
+export default function EmailVerification() {
+    const [verificationStatus, setVerificationStatus] = useState<string>("")
+    const isRequestSent = useRef<boolean>(false)
+    const location = useLocation()
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search)
+        const token = searchParams.get("token")
+        console.log(`Token extracted from URL: ${token}`)
+
         const sendVerificationRequest = async () => {
-            if (isRequestSent) return
-            setIsRequestSent(true)
             try {
-                const response = await fetch(`${BASE_URL}/verify-email/${token}/`,
-                    {
-                        method: "GET",
-                        headers: {
-                            "content-type": "application/json"
-                        }
+                const response = await fetch(`${BASE_URL}/verify-email/${token}/`, {
+                    method: "GET",
+                    headers: {
+                        "content-type": "application/json"
                     }
-                )
-                const responseData = await response.json();
-                console.log(`Response Data: ${JSON.stringify(responseData)}`);
+                })
+                const responseData = await response.json()
+                console.log(`Response Data: ${JSON.stringify(responseData)}`)
                 if (response.ok) {
                     setVerificationStatus("success")
                 } else {
                     setVerificationStatus("failure")
                 }
-
             } catch (error) {
-                console.error("Fehler bei der Verifizierung:", error);
-                setVerificationStatus("error");
+                console.error("Fehler bei der Verifizierung:", error)
+                setVerificationStatus("error")
             }
         }
 
-
-        if (token && !isRequestSent) {
+        if (token && !isRequestSent.current) {
+            isRequestSent.current = true
             sendVerificationRequest()
-        } else {
-            setVerificationStatus("missing");
+        } else if (!token) {
+            setVerificationStatus("missing")
         }
-
-
-    }, [location, isRequestSent])
+    }, [location])
 
     let message;
     switch (verificationStatus) {
@@ -72,9 +142,6 @@ export default function EmailVerification() {
             message = "Verifizierung läuft...";
     }
 
-
-
-    return (
-        <div>{message}</div>
-    )
+    return <div>{message}</div>
 }
+
