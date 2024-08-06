@@ -1,7 +1,10 @@
-import { Box, Button, InputAdornment, TextField } from "@mui/material";
+import { Box, Button, InputAdornment, Modal, TextField, Typography } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../static/api";
+import PersonIcon from '@mui/icons-material/Person';
+import { useState } from "react";
+import UserDetails from "./UserDetails";
 
 
 type HeaderProps = {
@@ -9,9 +12,24 @@ type HeaderProps = {
     searchTerm: string
 }
 
+const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 350,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
+
 
 export default function Header({ handleSearch, searchTerm }: HeaderProps) {
     const navigate = useNavigate()
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
 
 
@@ -48,7 +66,7 @@ export default function Header({ handleSearch, searchTerm }: HeaderProps) {
         <>
             <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" borderBottom="1px solid rgb(237, 232, 232)" >
                 <img src="../../src/assets/logo.svg" />
-                <Box display="flex" gap={2}>
+                <Box display="flex" gap={2} alignItems="center">
                     <TextField
                         sx={{
                             borderRadius: "4px",
@@ -70,9 +88,24 @@ export default function Header({ handleSearch, searchTerm }: HeaderProps) {
                         }}
                         variant="standard"
                     />
+                    <Box>
+                        <Button onClick={handleOpen}>
+                            <PersonIcon style={{ fontSize: 40 }} />
+                        </Button>
+                    </Box>
                     <Button onClick={handleLogout} variant="contained">Ausloggen</Button>
                 </Box>
             </Box>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <UserDetails />
+                </Box>
+            </Modal>
         </>
     )
 }
