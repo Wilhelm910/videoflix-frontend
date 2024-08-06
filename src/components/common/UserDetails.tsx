@@ -3,11 +3,19 @@ import { BASE_URL } from "../../static/api"
 import { Box, Button, TextField, Typography } from "@mui/material"
 import { UserProps } from "../../utils/types"
 
-export default function UserDetails() {
+
+type UserDetailsProps = {
+    notify: (message: string) => void
+}
+
+export default function UserDetails({ notify }: UserDetailsProps) {
 
     const [user, setUser] = useState<UserProps | null>()
     const [newPassword, setNewPassword] = useState("")
+    const [oldPassword, setOldPassword] = useState("")
     const [confirmNewPassword, setConfirmNewPassword] = useState("")
+    const [message, setMessage] = useState("")
+
 
     useEffect(() => {
         const loadUser = async () => {
@@ -36,13 +44,37 @@ export default function UserDetails() {
     }, [])
 
 
-    const handleChange = () => {
+    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault()
+        if (newPassword === confirmNewPassword) {
+            try {
+                const response = await fetch(`${BASE_URL}/change-password/`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Token ${sessionStorage.getItem("token")}`
+                    },
+                    body: JSON.stringify({
+                        old_password: oldPassword,
+                        new_password: newPassword
+                    })
+                })
+                const data = await response.json()
+                if (response.ok) {
+                    setMessage("Passwort erfolgreich geändert")
+                } else {
+                    setMessage("Fehler beim Ändern des Passworts")
 
-    }
+                }
 
-
-    const handleSubmit = () => {
-
+            } catch (error) {
+                setMessage("Fehler beim Ändern des Passworts")
+            }
+        } else {
+            setMessage("Passwörter stimmen nicht überein")
+        }
+        console.log(message)
+        notify(message)
     }
 
 
@@ -59,7 +91,7 @@ export default function UserDetails() {
                         type="password"
                         name="newPassword"
                         value={newPassword}
-                        onChange={(e) => handleChange(e)}
+                        onChange={(e) => setNewPassword(e.target.value)}
                     />
                     <TextField
                         fullWidth
@@ -69,7 +101,7 @@ export default function UserDetails() {
                         type="password"
                         name="confirmNewPassword"
                         value={confirmNewPassword}
-                        onChange={(e) => handleChange(e)}
+                        onChange={(e) => setConfirmNewPassword(e.target.value)}
                     />
                     <TextField
                         fullWidth
@@ -77,9 +109,9 @@ export default function UserDetails() {
                         id="outlined-password-input"
                         label="Bestätige mit deinem alten Passwort"
                         type="password"
-                        name="password"
-                        value={user?.password}
-                        onChange={(e) => handleChange(e)}
+                        name="oldPassword"
+                        value={oldPassword}
+                        onChange={(e) => setOldPassword(e.target.value)}
                     />
                     <Button onClick={(e) => handleSubmit(e)} variant="contained">Speichern</Button>
                 </Box>

@@ -5,7 +5,8 @@ import { BASE_URL } from "../../static/api";
 import PersonIcon from '@mui/icons-material/Person';
 import { useState } from "react";
 import UserDetails from "./UserDetails";
-
+import { ToastContainer, toast } from 'react-toastify';
+const notify = (message: string) => toast(message);
 
 type HeaderProps = {
     handleSearch: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
@@ -64,6 +65,7 @@ export default function Header({ handleSearch, searchTerm }: HeaderProps) {
 
     return (
         <>
+          <ToastContainer />
             <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" borderBottom="1px solid rgb(237, 232, 232)" >
                 <img src="../../src/assets/logo.svg" />
                 <Box display="flex" gap={2} alignItems="center">
@@ -103,7 +105,7 @@ export default function Header({ handleSearch, searchTerm }: HeaderProps) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <UserDetails />
+                    <UserDetails notify={notify} />
                 </Box>
             </Modal>
         </>
