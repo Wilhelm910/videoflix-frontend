@@ -102,14 +102,18 @@ export default function Video({ video, onFavouriteChange }: VideoProps) {
             <Box sx={boxStyling}>
                 <img width={320} src={`${BASE_URL}${video.thumbnail}`} alt="Video Thumbnail" onClick={handleOpen} />
                 <Box className="textContent" sx={textStyling}>
-                    <Box>
+                    <Box display="flex" alignItems="center" justifyContent="space-between">
                         <Typography variant="h6">{video.title}</Typography>
+                        <Box>
+                            {favourite && <FavoriteIcon onClick={() => handleFavourite(false, video.id)} />}
+                            {!favourite && <FavoriteBorderIcon onClick={() => handleFavourite(true, video.id)} />}
+                        </Box>
+                    </Box>
+                    <Box>
+
                         <Typography variant="body2">{video.description.slice(0, 80) + "..."}</Typography>
                     </Box>
-                    <Box>
-                        {favourite && <FavoriteIcon onClick={() => handleFavourite(false, video.id)} />}
-                        {!favourite && <FavoriteBorderIcon onClick={() => handleFavourite(true, video.id)} />}
-                    </Box>
+
                 </Box>
             </Box>
             <Modal

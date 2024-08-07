@@ -5,7 +5,7 @@ import { VideoDetails } from '../../utils/types';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 
-type ResProps = "original" | "480p" | null;
+type ResProps = "original" | "480p" | "720p" | null;
 
 type SettingsProps = true | false
 
@@ -26,7 +26,8 @@ const iconStyling = {
 export default function VideoManager({ video_id }: VideoManagerProps) {
     const [resolution, setResolution] = useState<ResProps>(null);
     const [videoSrc, setVideoSrc] = useState("");
-    const [videoSrc2, setVideoSrc2] = useState("")
+    const [videoSrc480p, setVideoSrc480p] = useState("")
+    const [videoSrc720p, setVideoSrc720p] = useState("")
     const [videoData, setVideoData] = useState<VideoDetails | null>(null)
     const [settings, setSettings] = useState<SettingsProps>(false)
     const handleClick = (res: ResProps) => {
@@ -62,11 +63,24 @@ export default function VideoManager({ video_id }: VideoManagerProps) {
                 }
             })
             const data480p = await response480p.json()
-            setVideoSrc2(`${BASE_URL}${data480p.video_file_480p}`)
+            setVideoSrc480p(`${BASE_URL}${data480p.video_file_480p}`)
+        }
+
+        
+        const get720p = async () => {
+            const response720p = await fetch(`${BASE_URL}/video/${video_id}/720p/`, {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            const data720p = await response720p.json()
+            setVideoSrc720p(`${BASE_URL}${data720p.video_file_720p}`)
         }
 
         getOriginal()
         get480p()
+        get720p()
 
 
     }, [video_id])
@@ -80,8 +94,12 @@ export default function VideoManager({ video_id }: VideoManagerProps) {
                     <source src={videoSrc} type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>}
+                {resolution === "720p" && <video width="100%" controls>
+                    <source src={videoSrc720p} type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>}
                 {resolution === "480p" && <video width="100%" controls>
-                    <source src={videoSrc2} type="video/mp4" />
+                    <source src={videoSrc480p} type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>}
                 {resolution === null &&
@@ -89,13 +107,15 @@ export default function VideoManager({ video_id }: VideoManagerProps) {
                 }
                 <Typography p={2}>{videoData?.description}</Typography>
             </Box>
-            <SettingsIcon sx={iconStyling} onClick={handleSettings} />
+
             {settings && (
                 <Box width="100%" display="flex" alignItems="center" justifyContent="center" mb={2}>
                     <Button sx={{ width: "150px", mr: "4px" }} variant="contained" onClick={() => handleClick("original")}>Original</Button>
+                    <Button sx={{ width: "150px", mr: "4px" }} variant="contained" onClick={() => handleClick("720p")}>720p</Button>
                     <Button sx={{ width: "150px" }} variant="contained" onClick={() => handleClick("480p")}>480p</Button>
                 </Box>
             )}
+            <SettingsIcon sx={iconStyling} onClick={handleSettings} />
         </Box>
     )
 }
