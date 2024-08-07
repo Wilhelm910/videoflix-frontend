@@ -6,7 +6,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useState } from "react";
 import UserDetails from "./UserDetails";
 import { ToastContainer, toast } from 'react-toastify';
-const notify = (message: string) => toast(message);
+
 
 type HeaderProps = {
     handleSearch: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
@@ -31,6 +31,7 @@ export default function Header({ handleSearch, searchTerm }: HeaderProps) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const notify = (message: string) => toast(message);
 
 
 

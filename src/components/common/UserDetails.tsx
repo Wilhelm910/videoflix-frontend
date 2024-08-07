@@ -8,14 +8,18 @@ type UserDetailsProps = {
     notify: (message: string) => void
 }
 
+type ResponseDataProps = {
+    new_password: string[]
+    old_password: string[]
+}
+
 export default function UserDetails({ notify }: UserDetailsProps) {
 
-    const [user, setUser] = useState<UserProps | null>()
+    const [user, setUser] = useState<UserProps | null>(null)
     const [newPassword, setNewPassword] = useState("")
     const [oldPassword, setOldPassword] = useState("")
     const [confirmNewPassword, setConfirmNewPassword] = useState("")
-    const [message, setMessage] = useState("")
-
+    const [responseData, setResponseData] = useState<ResponseDataProps | null>(null)
 
     useEffect(() => {
         const loadUser = async () => {
@@ -60,21 +64,20 @@ export default function UserDetails({ notify }: UserDetailsProps) {
                     })
                 })
                 const data = await response.json()
+                setResponseData(data)
+                console.log(data)
                 if (response.ok) {
-                    setMessage("Passwort erfolgreich geändert")
+                    notify("Passwort erfolgreich geändert")
                 } else {
-                    setMessage("Fehler beim Ändern des Passworts")
-
+                    notify("Fehler beim Ändern des Passworts")
                 }
 
             } catch (error) {
-                setMessage("Fehler beim Ändern des Passworts")
+                notify("Fehler beim Ändern des Passworts")
             }
         } else {
-            setMessage("Passwörter stimmen nicht überein")
+            notify("Passwörter stimmen nicht überein")
         }
-        console.log(message)
-        notify(message)
     }
 
 
@@ -114,6 +117,14 @@ export default function UserDetails({ notify }: UserDetailsProps) {
                         onChange={(e) => setOldPassword(e.target.value)}
                     />
                     <Button onClick={(e) => handleSubmit(e)} variant="contained">Speichern</Button>
+                    <Box color="black">
+                        {responseData?.new_password && responseData.new_password.map((message, index) => (
+                            <Typography key={index}>{message}</Typography>
+                        ))}
+                        {responseData?.old_password && responseData.old_password.map((message, index) => (
+                            <Typography key={index}>{message}</Typography>
+                        ))}
+                    </Box>
                 </Box>
             </form>
         </Box>
