@@ -266,6 +266,8 @@ export default function Videos({ searchTerm }: VideosProps) {
         );
     };
 
+    console.log(videoList)
+
     return (
         <>
             {videoGroups.map((group) => {
