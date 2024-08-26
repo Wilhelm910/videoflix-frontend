@@ -1,11 +1,10 @@
-import React from 'react'
 
 export default function Datenschutz() {
     return (
     <>
             <h1>Datenschutzerklärung</h1>
             <p>Stand: 23. August 2024</p><h2>Inhaltsübersicht</h2>
-            <ul class="index"><li><a class="index-link" href="#m3">Verantwortlicher</a></li><li><a class="index-link" href="#mOverview">Übersicht der Verarbeitungen</a></li><li><a class="index-link" href="#m2427">Maßgebliche Rechtsgrundlagen</a></li><li><a class="index-link" href="#m27">Sicherheitsmaßnahmen</a></li><li><a class="index-link" href="#m25">Übermittlung von personenbezogenen Daten</a></li><li><a class="index-link" href="#m24">Internationale Datentransfers</a></li><li><a class="index-link" href="#m12">Allgemeine Informationen zur Datenspeicherung und Löschung</a></li><li><a class="index-link" href="#m10">Rechte der betroffenen Personen</a></li><li><a class="index-link" href="#m225">Bereitstellung des Onlineangebots und Webhosting</a></li><li><a class="index-link" href="#m134">Einsatz von Cookies</a></li><li><a class="index-link" href="#m182">Kontakt- und Anfrageverwaltung</a></li></ul><h2 id="m3">Verantwortlicher</h2><p>Vorname, Name / Firma <br></br> Straße, Hausnr.<br></br> PLZ, Ort, Land</p>
+            <ul><li><a  href="#m3">Verantwortlicher</a></li><li><a href="#mOverview">Übersicht der Verarbeitungen</a></li><li><a  href="#m2427">Maßgebliche Rechtsgrundlagen</a></li><li><a  href="#m27">Sicherheitsmaßnahmen</a></li><li><a  href="#m25">Übermittlung von personenbezogenen Daten</a></li><li><a class="index-link" href="#m24">Internationale Datentransfers</a></li><li><a class="index-link" href="#m12">Allgemeine Informationen zur Datenspeicherung und Löschung</a></li><li><a class="index-link" href="#m10">Rechte der betroffenen Personen</a></li><li><a class="index-link" href="#m225">Bereitstellung des Onlineangebots und Webhosting</a></li><li><a class="index-link" href="#m134">Einsatz von Cookies</a></li><li><a class="index-link" href="#m182">Kontakt- und Anfrageverwaltung</a></li></ul><h2 id="m3">Verantwortlicher</h2><p>Vorname, Name / Firma <br></br> Straße, Hausnr.<br></br> PLZ, Ort, Land</p>
                 <p>E-Mail-Adresse: <a href="mailto:vorname.name@beispielsdomain.eu">vorname.name@beispielsdomain.eu</a></p>
 
                 <h2 id="mOverview">Übersicht der Verarbeitungen</h2><p>Die nachfolgende Übersicht fasst die Arten der verarbeiteten Daten und die Zwecke ihrer Verarbeitung zusammen und verweist auf die betroffenen Personen.</p><h3>Arten der verarbeiteten Daten</h3>

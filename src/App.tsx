@@ -1,4 +1,4 @@
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Routes, Navigate, } from 'react-router-dom'
 import './App.css'
 import Login from './components/auth/Login'
 import Home from './pages/Home'
@@ -24,6 +24,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router>
           <Routes>
+            <Route path="/" element={<Navigate to="/login/" />} />
             <Route path="/login/" element={<Login />} />
             <Route path="/home/" element={<Home />} />
             <Route path="/email-verification/" element={<EmailVerification />} />

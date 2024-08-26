@@ -2,8 +2,8 @@ export default function Impressum() {
     return (
         <>
             <div><h1>Impressum</h1><p>Angaben gemäß § 5 DDG</p><p>Wilhelm Teicke
-                Rödelheimer Landstraße 64
-                60487 Frankfurt <br></br>
+                Rödelheimer 1
+                60000 Frankfurt <br></br>
             </p><p> <strong>Vertreten durch: </strong>
                     Wilhelm Teicke<br></br>
                 </p><p><strong>Kontakt:</strong> <br></br>
