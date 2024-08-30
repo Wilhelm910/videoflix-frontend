@@ -44,7 +44,7 @@ export default function UserMask({ user, notify }: UserMaskProps) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={modalStyle}>
-                    <UserLogin is_verified={user.is_verified} email={user.email} notify={notify} />
+                    <UserLogin is_verified={user.is_verified ?? false} email={user.email} notify={notify} />
                 </Box>
             </Modal>
         </Box>

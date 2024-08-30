@@ -1,4 +1,4 @@
-import { Box, Button, colors, Modal, Typography } from '@mui/material'
+import { Box, Button, Modal } from '@mui/material'
 import { useState } from 'react';
 import Impressum from './Impressum';
 import Datenschutz from './Datenschutz';

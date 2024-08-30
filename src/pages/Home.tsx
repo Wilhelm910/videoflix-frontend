@@ -6,7 +6,7 @@ import Footer from "../components/common/Footer";
 
 
 
-const outerContainerStyle = {
+const outerContainerStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
   minHeight: "100vh",  // Vollständige Höhe des Viewports

@@ -1,4 +1,4 @@
-import { Box, Button, InputAdornment, Modal, TextField, Typography } from "@mui/material";
+import { Box, Button, InputAdornment, Modal, TextField } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../static/api";

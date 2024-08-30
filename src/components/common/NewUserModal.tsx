@@ -6,7 +6,6 @@ import { UserProps } from "../../utils/types";
 
 
 const initialUserData: UserProps = {
-    username: "",
     first_name: "",
     last_name: "",
     email: "",
@@ -38,7 +37,7 @@ export default function NewUserModal({ notify, setUserList }: NewUserModalProps)
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         if (confirmPassword === user.password) {
-            const username = `${user.first_name.toLowerCase()}.${user.last_name.toLowerCase()}`;
+            // const username = `${user.first_name.toLowerCase()}.${user.last_name.toLowerCase()}`;
             try {
                 let response = await fetch(`${BASE_URL}/register/`, {
                     method: "POST",
