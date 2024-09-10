@@ -24,7 +24,7 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Router basename="/videoflix/">
+        <Router basename="/videoflix">
           <Routes>
             <Route path="/" element={<Navigate to="/login/" />} />
             <Route path="/login/" element={<Login />} />
