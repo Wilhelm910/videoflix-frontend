@@ -14,6 +14,8 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export default function login() {
 
+    console.log("login mounted")
+
     const [userList, setUserList] = useState<UserProps[]>()
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);

@@ -18,11 +18,13 @@ const theme = createTheme({
 
 function App() {
 
+  console.log("app mounted")
+
 
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Router>
+        <Router basename="/videoflix/">
           <Routes>
             <Route path="/" element={<Navigate to="/login/" />} />
             <Route path="/login/" element={<Login />} />

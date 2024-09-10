@@ -24,6 +24,10 @@ const footerContainerStyle = {
 
 
 export default function Home() {
+
+  console.log("home mounted")
+
+
   const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState<string>("")
 
