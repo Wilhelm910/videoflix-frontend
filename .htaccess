@@ -1,0 +1,77 @@
+# # CORS-Einstellungen (falls gewünscht, wie in deiner aktuellen .htaccess-Datei)
+# Header add Access-Control-Allow-Origin "*"
+# Header add Access-Control-Allow-Methods "GET,POST,OPTIONS,DELETE,PUT"
+
+# # React Router - URL-Rewrite für Client-seitige Navigation
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteBase /videoflix/
+#   RewriteRule ^index\.html$ - [L]
+#   RewriteCond %{REQUEST_FILENAME} !-f
+#   RewriteCond %{REQUEST_FILENAME} !-d
+#   RewriteRule . /videoflix/index.html [L]
+# </IfModule>
+
+
+# <IfModule mod_rewrite.c>
+
+#   RewriteEngine On
+#   RewriteBase /videoflix/
+#   RewriteRule ^index\.html$ - [L]
+#   RewriteCond %{REQUEST_FILENAME} !-f
+#   RewriteCond %{REQUEST_FILENAME} !-d
+#   RewriteCond %{REQUEST_FILENAME} !-l
+#   RewriteRule . /videoflix/index.html [L]
+
+# </IfModule>
+
+
+
+
+
+
+
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteBase /videoflix/
+  
+#   # Ignoriere vorhandene Dateien oder Verzeichnisse
+#   RewriteCond %{REQUEST_FILENAME} !-f
+#   RewriteCond %{REQUEST_FILENAME} !-d
+  
+#   # Leite alle anderen Anfragen auf index.html um
+#   RewriteRule ^ index.html [QSA,L]
+# </IfModule>
+
+
+
+
+
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteBase /videoflix/
+
+#   # Wenn die URL ein vorhandenes Verzeichnis oder eine Datei ist, ignoriere es
+#   RewriteCond %{REQUEST_FILENAME} !-f
+#   RewriteCond %{REQUEST_FILENAME} !-d
+
+#   # Leite alle anderen Anfragen auf index.html weiter
+#   RewriteRule ^ /videoflix/index.html [L]
+# </IfModule>
+
+
+
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /videoflix/
+
+  # Ignoriere vorhandene Dateien oder Verzeichnisse
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+
+  # Leite alle anderen Anfragen auf /videoflix/index.html um
+  RewriteRule ^ /videoflix/index.html [L]
+</IfModule>
+
+
