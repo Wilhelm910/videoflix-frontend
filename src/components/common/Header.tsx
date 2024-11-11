@@ -66,9 +66,9 @@ export default function Header({ handleSearch, searchTerm }: HeaderProps) {
 
     return (
         <>
-          <ToastContainer />
+            <ToastContainer />
             <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" borderBottom="1px solid rgb(237, 232, 232)" >
-                <img src="../../src/assets/logo.svg" />
+                <img src="/videoflix/assets/logo.svg" alt="Logo" />
                 <Box display="flex" gap={2} alignItems="center">
                     <TextField
                         sx={{

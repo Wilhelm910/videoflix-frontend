@@ -13,7 +13,6 @@ export type VideoDetails = {
     description: string
     created_at: string
     video_file: string
-    // video_file_480p?: string
     thumbnail: string
     categories: string[]
     favourite: boolean

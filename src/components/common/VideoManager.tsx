@@ -119,35 +119,3 @@ export default function VideoManager({ video_id }: VideoManagerProps) {
         </Box>
     )
 }
-
-
-// useEffect(() => {
-//     const get480p = async () => {
-//         try {
-//             const response = await fetch(`${BASE_URL}/video/${video_id}/480p/`, {
-//                 method: "GET",
-//                 headers: {
-//                     "content-type": "application/json"
-//                 }
-//             });
-//             const data = await response.json();
-//             if (data.video_file_480p) {
-//                 setVideoSrc(`${BASE_URL}${data.video_file_480p}`);
-//             } else {
-//                 console.error("480p video URL not found");
-//             }
-//         } catch (error) {
-//             console.error("Error fetching 480p video:", error);
-//         }
-//     };
-
-//     if (resolution === "original") {
-//         setVideoSrc(`${BASE_URL}${video.video_file}`);
-//     } else if (resolution === "480p") {
-//         if (video.video_file_480p) {
-//             setVideoSrc(`${BASE_URL}${video.video_file_480p}`);
-//         } else {
-//             get480p();
-//         }
-//     }
-// }, [resolution, video.id, video.video_file, video.video_file_480p]);

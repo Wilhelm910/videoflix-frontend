@@ -9,12 +9,12 @@ import Footer from "../components/common/Footer";
 const outerContainerStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
-  minHeight: "100vh",  // Vollständige Höhe des Viewports
+  minHeight: "100vh",
   margin: 0,
 };
 
 const innerContainerStyle = {
-  flex: 1,  // Füllt den restlichen Platz
+  flex: 1,
   padding: "0 40px",
 };
 
@@ -24,9 +24,6 @@ const footerContainerStyle = {
 
 
 export default function Home() {
-
-  console.log("home mounted")
-
 
   const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState<string>("")
