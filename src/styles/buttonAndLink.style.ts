@@ -1,0 +1,1 @@
+export const buttonAndLinkStyle = "bg-blue-500 text-white font-semibold rounded-full px-4 py-2"

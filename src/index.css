@@ -1,0 +1,14 @@
+@import '@fontsource/roboto';
+/* Standardimport für Roboto */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    body {
+        @apply font-roboto;
+        /* Wendet die Klasse font-roboto global an */
+    }
+}
