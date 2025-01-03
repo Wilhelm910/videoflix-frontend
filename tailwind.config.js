@@ -6,6 +6,9 @@ export default {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"], // Benenne deine Schriftart
       },
+      screens: {
+        'xl-1500': '1500px', // Neuer Breakpoint bei 1500px
+      },
     },
   },
   plugins: [],

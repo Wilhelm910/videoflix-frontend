@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import videoSrc from "../assets/Kuchen.mp4";
 
 const VideoPlayer = () => {

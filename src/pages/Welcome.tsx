@@ -1,4 +1,15 @@
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+
 export default function Welcome() {
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (sessionStorage.getItem("token")) {
+            navigate("/home")
+        }
+    }, [])
+
     return (
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white space-y-4">
             <h1 className="text-4xl font-bold">Movies, TV shows, and more</h1>

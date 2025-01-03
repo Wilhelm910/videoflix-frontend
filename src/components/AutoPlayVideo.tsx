@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import videoSrc from '../assets/Kuchen.mp4';
 import CustomButton from '../components/CustomButton';
 import { buttonAndLinkStyle } from '../styles/buttonAndLink.style';
@@ -9,7 +8,6 @@ type AutoPlayVideoProps = {
 
 export default function AutoPlayVideo({ setPlayVideo }: AutoPlayVideoProps) {
 
-    const videoId = 1
 
     const onClick = () => {
         setPlayVideo(true)

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useLocation } from "react-router-dom"
 import { BASE_URL } from "../static/api";
-import Modal from "../components/Modal";
 
 
 export default function EmailVerification() {
@@ -62,6 +61,6 @@ export default function EmailVerification() {
             message = "Verifizierung läuft...";
     }
 
-    return <div><Modal title={message} /></div>
+    return <div>{message}</div>
 }
 

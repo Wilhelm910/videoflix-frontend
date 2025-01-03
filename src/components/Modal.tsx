@@ -1,6 +1,6 @@
 type ModalProps = {
     title: string;
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 export default function Modal({ title, children }: ModalProps) {
