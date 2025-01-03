@@ -14,7 +14,7 @@ export const HeaderLogoutLinkProps = {
 }
 
 export const HeaderLogoProps = {
-    href: "/",
+    href: "/#/welcome",
     img: logo
 }
 

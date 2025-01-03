@@ -7,6 +7,7 @@ import Layout from './components/Layout';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import SignUp from './pages/SignUp';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgotPassword" element={<ForgotPassword />} />
+            <Route path="/password-reset" element={<ResetPassword />} />
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/home" element={<Home />} />
             <Route path="/email-verification" element={<EmailVerification />} />

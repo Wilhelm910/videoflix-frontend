@@ -1,11 +1,16 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import Cookies from 'js-cookie';
 
 export default function Welcome() {
     const navigate = useNavigate()
 
     useEffect(() => {
+        const cookieToken = Cookies.get("token")
         if (sessionStorage.getItem("token")) {
+            navigate("/home")
+        } else if (cookieToken) {
+            sessionStorage.setItem("token", cookieToken)
             navigate("/home")
         }
     }, [])

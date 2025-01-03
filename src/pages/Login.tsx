@@ -10,6 +10,7 @@ import { BASE_URL } from "../static/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 
 
@@ -21,6 +22,7 @@ const initialUser = {
 export default function Login() {
 
     const [user, setUser] = useState<UserProps>(initialUser)
+    const [rememberMe, setRememberMe] = useState(false)
     const navigate = useNavigate()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -43,6 +45,9 @@ export default function Login() {
             let data = await response.json()
             if (response.ok) {
                 sessionStorage.setItem("token", data.token)
+                if (rememberMe) {
+                    Cookies.set('token', data.token, { expires: 30, secure: true, sameSite: 'strict' });
+                }
                 navigate("/home")
             } else {
                 toast.error(data.error)
@@ -74,8 +79,10 @@ export default function Login() {
                         placeholder="Password" />
                     <div className="flex items-center space-x-2 w-full">
                         <input
+                            onChange={(e) => setRememberMe(e.target.checked)}
                             type="checkbox"
                             id="remember"
+                            checked={rememberMe}
                             className="w-5 h-5 text-blue-500 border-2 border-blue-500 rounded focus:ring-blue-500 focus:ring-2"
                         />
                         <label htmlFor="remember" className="text-gray-700">

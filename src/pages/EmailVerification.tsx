@@ -13,6 +13,7 @@ export default function EmailVerification() {
         const searchParams = new URLSearchParams(location.search)
         const token = searchParams.get("token")
         console.log(`Token extracted from URL: ${token}`)
+        
 
         const sendVerificationRequest = async () => {
             try {

@@ -6,7 +6,7 @@ export const LogInButtonProps = {
 }
 
 export const ForgotPasswordButtonProps = {
-    content: "Email Address",
+    content: "Send Email",
     layout: buttonAndLinkStyle
 }
 

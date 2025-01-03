@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import Cookies from 'js-cookie';
 
 type LogoutButtonProps = {
     props: {
@@ -16,6 +17,9 @@ export default function LogoutButton({ props, type }: LogoutButtonProps) {
 
     const handleLogout = () => {
         sessionStorage.removeItem('token');
+        if (Cookies.get("token")) {
+            Cookies.remove('token');
+        }
         navigate("/welcome")
     }
 

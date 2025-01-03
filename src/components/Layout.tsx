@@ -22,6 +22,7 @@ export default function Layout() {
             {currentRoute == "/signUp" && <div className="absolute inset-0 bg-[url('/src/assets/bg-img-account.jpg')] bg-cover bg-center bg-no-repeat -z-10"></div>}
             {currentRoute == "/forgotPassword" && <div className="absolute inset-0 bg-[url('/src/assets/bg-img-account.jpg')] bg-cover bg-center bg-no-repeat -z-10"></div>}
             {currentRoute == "/email-verification" && <div className="absolute inset-0 bg-[url('/src/assets/bg-img-account.jpg')] bg-cover bg-center bg-no-repeat -z-10"></div>}
+            {currentRoute == "/password-reset" && <div className="absolute inset-0 bg-[url('/src/assets/bg-img-account.jpg')] bg-cover bg-center bg-no-repeat -z-10"></div>}
             {currentRoute == "/home" && <div className="absolute inset-0 bg-[url('/src/assets/bg-img-home.jpg')] bg-cover bg-center bg-no-repeat -z-10"></div>}
             {/* Dunkles Overlay */}
             <div className="absolute inset-0 bg-black opacity-80 -z-10"></div>
