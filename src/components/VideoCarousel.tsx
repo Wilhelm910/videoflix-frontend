@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import { MovieData } from "../types/types"
 import BackwardsButton from "./BackwardsButton";
 import ForwardButton from "./ForwardButton";
+import Movie from "./Movie";
 
 type VideoCarouselProps = {
     movies: MovieData[]; // Ein Array von MovieData
+    handleFavouriteChange: (movieId: number) => void
+    handleOpenVideoPlayer: (movieId: number) => void
 }
 
 
-export default function VideoCarousel({ movies }: VideoCarouselProps) {
+export default function VideoCarousel({ movies, handleFavouriteChange, handleOpenVideoPlayer }: VideoCarouselProps) {
     const [startIndex, setStartIndex] = useState<number>(0);
     const [width, setWidth] = useState(0)
 
@@ -46,21 +49,23 @@ export default function VideoCarousel({ movies }: VideoCarouselProps) {
         )
     }
 
+
+
     return (
         <>
             <div className="flex gap-4">
                 {0 < startIndex && <BackwardsButton onClick={handleBackwardsClick} />}
-                <div className="overflow-hidden">
+                <div>
                     <div className="flex gap-4">
-                        {movies.slice(startIndex, visibleCount).map((movie, index) => (
-                            <div key={index} className="bg-blue-500 w-64 h-32 text-white flex-shrink-0">
-                                {movie.title}
-                            </div>
+                        {movies.slice(startIndex, startIndex + visibleCount).map((movie, index: number) => (
+                            <Movie handleOpenVideoPlayer={handleOpenVideoPlayer} handleFavouriteChange={handleFavouriteChange} key={index} movie={movie} />
                         ))}
+
                     </div>
                 </div>
                 {movies.length > visibleCount && <ForwardButton onClick={handleForwardClick} />}
             </div>
+
         </>
     )
 }

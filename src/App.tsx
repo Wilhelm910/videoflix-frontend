@@ -11,6 +11,8 @@ import ResetPassword from './pages/ResetPassword';
 
 function App() {
 
+  const token = sessionStorage.getItem("token")
+
 
   return (
     <>
@@ -22,7 +24,7 @@ function App() {
             <Route path="/forgotPassword" element={<ForgotPassword />} />
             <Route path="/password-reset" element={<ResetPassword />} />
             <Route path="/signUp" element={<SignUp />} />
-            <Route path="/home" element={<Home />} />
+            {token && <Route path="/home" element={<Home />} />}
             <Route path="/email-verification" element={<EmailVerification />} />
             <Route path="*" element={<Navigate to="/welcome" />} />
           </Route >

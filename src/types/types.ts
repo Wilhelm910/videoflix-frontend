@@ -9,8 +9,11 @@ export type CustomButtonProps = {
 export type MovieData = {
     title: string;
     description: string;
-    category: string;
-    searchPhrase: string[];
+    categories: string[];
+    group: string;
+    thumbnail: string
+    favourite: boolean
+    id: number
 }
 
 

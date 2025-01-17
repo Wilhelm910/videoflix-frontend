@@ -1,32 +1,71 @@
 import { useEffect, useState } from "react";
-import { fetchMovieData } from "../data/testVideoContent"; // Importiere die Fetch-Funktion
 import { MovieData } from "../types/types";
+import { BASE_URL } from "../static/api";
 
-export default function getVideosService() {
+type VideoServiceProps = {
+    movieId?: number;
+};
+
+export default function getVideosService({ movieId }: VideoServiceProps) {
     const [movieData, setMovieData] = useState<MovieData[] | null>(null);
-    const [categories, setCategories] = useState<string[]>([]);
+    console.log("movieId outside of useEffect", movieId)
 
-    const getMovieData = async (): Promise<void> => {
-        try {
-            const data: MovieData[] = await fetchMovieData(); // Holen der Daten
-            setMovieData(data); // Setze die erhaltenen Daten in den Zustand
-        } catch (error) {
-            console.error("Fehler beim Abrufen der Film-Daten:", error);
+
+
+    const getMovieData = async () => {
+        console.log("INSIDE FUNC", movieId)
+        if (movieId) {
+            console.log("test")
+            try {
+                const response = await fetch(`${BASE_URL}/video/${movieId}/`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache',
+                        'Authorization': `Token ${sessionStorage.getItem('token')}`,
+                    },
+                });
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.statusText}`);
+                } else {
+                    setMovieData(prevData => prevData ? prevData.map(movie =>
+                        movie.id === movieId ? { ...movie, ...data } : movie
+                    ) : [data]);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            try {
+                const response = await fetch(`${BASE_URL}/videos/`, {
+                    method: "GET",
+                    headers: {
+                        "content-type": "application/json",
+                        "Cache-Control": "no-cache",
+                    },
+                });
+                const data = await response.json();
+                setMovieData(data);
+            } catch (error) {
+                console.error(error);
+            }
         }
     };
 
-    useEffect(() => {
-        getMovieData()
-    }, [])
+    // if (movieId) {
+    //     getMovieData()
+    // }
 
-    // Effekt, der läuft, sobald movieData sich ändert, um die Kategorien zu setzen
-    useEffect(() => {
-        if (movieData) {
-            const allCategories = movieData.map((movie) => movie.category);
-            const uniqueCategories = Array.from(new Set(allCategories)); // Duplikate entfernen
-            setCategories(uniqueCategories); // Alle einzigartigen Kategorien setzen
-        }
-    }, [movieData]); // Dieser Effekt wird nur ausgeführt, wenn sich movieData ändert
+    // useEffect(() => {
+    //     getMovieData();
+    // }, [movieId]);
 
-    return { movieData, categories };
+    useEffect(() => {
+        console.log("movieId INtside of useEffect", movieId)
+        getMovieData();
+    }, [movieId]);
+
+    return { movieData };
 }
