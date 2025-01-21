@@ -49,8 +49,8 @@ export default function Movie({ movie, handleFavouriteChange, handleOpenVideoPla
                 className="w-80 h-52 text-white flex-shrink-0 bg-cover bg-center flex flex-col"
                 style={{ backgroundImage: `url(${import.meta.env.VITE_BACKEND_URL}${movie.thumbnail})` }}
             >
-                <p className="p-2">{movie.title}</p>
-                <p>
+                <p className="pt-2 pl-2 text-xl">{movie.title}</p>
+                <p className="pl-2 pr-2">
                     {movie.description.length > 80
                         ? movie.description.substring(0, 80) + "..."
                         : movie.description}

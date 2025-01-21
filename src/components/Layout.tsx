@@ -38,7 +38,7 @@ export default function Layout() {
             </header>
 
             {/* Hauptinhalt */}
-            <main className="flex-1 z-10 sm:px-20 overflow-y-auto flex justify-center items-center box-border">
+            <main className="flex-1 z-10 sm:px-20 flex items-center box-border">
                 <Outlet />
             </main>
 

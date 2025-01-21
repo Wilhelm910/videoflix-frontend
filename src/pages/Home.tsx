@@ -107,6 +107,23 @@ export default function Home() {
     console.log(playVideo)
     console.log(openedVideo)
 
+
+    useEffect(() => {
+        if (playVideo) {
+            // Verhindert das Scrollen
+            document.body.style.overflow = "hidden";
+        } else {
+            // Erlaubt das Scrollen wieder
+            document.body.style.overflow = "auto";
+        }
+
+        // Cleanup: Setzt den Overflow zurück, wenn das Video geschlossen wird
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [playVideo]);
+
+
     return (
         <>
             <div>
@@ -128,15 +145,19 @@ export default function Home() {
                 })}
             </div>
             {playVideo && openedVideo && (
-                <div onClick={() => setPlayVideo(false)} className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center z-20">
+                <div
+                    onClick={() => setPlayVideo(false)}
+                    className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center z-20 bg-black bg-opacity-50"
+                >
                     <div
                         onClick={(e) => e.stopPropagation()} // Verhindert, dass der Overlay-Klick ausgelöst wird
-                        className="relative"
+                        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl"
                     >
                         <Videoplayer movie={openedVideo} />
                     </div>
                 </div>
             )}
+
         </>
     );
 }
