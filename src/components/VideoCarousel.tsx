@@ -206,6 +206,7 @@ export default function VideoCarousel({ movies, handleFavouriteChange, handleOpe
     const [startIndex, setStartIndex] = useState<number>(0);
     const [width, setWidth] = useState(0);
     const [touchStartX, setTouchStartX] = useState<number | null>(null);
+    const [isDisabled, setIsDisabled] = useState(false);
 
     const getVisibleCount = () => {
         if (width >= 1600) return 4;
@@ -271,6 +272,14 @@ export default function VideoCarousel({ movies, handleFavouriteChange, handleOpe
         ];
     };
 
+    const handleFavourite = (movieId: number) => {
+        if (!isDisabled) {
+            setIsDisabled(true);
+            handleFavouriteChange(movieId);
+            setTimeout(() => setIsDisabled(false), 2000); // Sperre nach 2 Sekunden aufheben
+        }
+    };
+
     return (
         <div
             className="flex items-center gap-4 relative"
@@ -285,8 +294,9 @@ export default function VideoCarousel({ movies, handleFavouriteChange, handleOpe
                         <Movie
                             key={index}
                             handleOpenVideoPlayer={handleOpenVideoPlayer}
-                            handleFavouriteChange={handleFavouriteChange}
+                            handleFavouriteChange={handleFavourite}
                             movie={movie}
+                            isDisabled={isDisabled}
                         />
                     ))}
                 </div>

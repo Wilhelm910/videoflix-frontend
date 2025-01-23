@@ -11,12 +11,21 @@ type MovieProps = {
     };
     handleFavouriteChange: (movieId: number) => void
     handleOpenVideoPlayer: (movieId: number) => void
+    isDisabled: boolean;
 };
 
-export default function Movie({ movie, handleFavouriteChange, handleOpenVideoPlayer }: MovieProps) {
+export default function Movie({ movie, handleFavouriteChange, handleOpenVideoPlayer, isDisabled }: MovieProps) {
     const [favourite, setFavourite] = useState(movie?.favourite);
 
+
+    useEffect(() => {
+        // Synchronisiere den Zustand, wenn sich die Props ändern
+        setFavourite(movie.favourite);
+    }, [movie.favourite]);
+
     const handleFavourite = async (favourite: boolean, movieId: number) => {
+        console.log(movie.title)
+        if (isDisabled) return; // Verhindert das doppelte Klicken
         try {
             const response = await fetch(`${BASE_URL}/video/${movieId}/update-favourite/`, {
                 method: "PUT",
@@ -35,8 +44,11 @@ export default function Movie({ movie, handleFavouriteChange, handleOpenVideoPla
             }
         } catch (error) {
             console.error('Error updating favourite:', error);
-        }
+        } 
     };
+
+    console.log(movie.title, favourite)
+    console.log(isDisabled)
 
     useEffect(() => {
 
@@ -65,7 +77,10 @@ export default function Movie({ movie, handleFavouriteChange, handleOpenVideoPla
                         strokeWidth="1.5"
                         stroke="currentColor"
                         className="w-8 h-8 text-blue-500 transform transition-transform duration-300 hover:scale-110 cursor-pointer"
-                        onClick={() => handleFavourite(true, movie.id)}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            handleFavourite(true, movie.id)
+                        }}
                     >
                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                     </svg>
@@ -75,7 +90,10 @@ export default function Movie({ movie, handleFavouriteChange, handleOpenVideoPla
                         viewBox="0 0 24 24"
                         fill="currentColor"
                         className="w-8 h-8 text-blue-500 transform transition-transform duration-300 hover:scale-110 cursor-pointer"
-                        onClick={() => handleFavourite(false, movie.id)}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            handleFavourite(false, movie.id)
+                        }}
                     >
                         <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                     </svg>
