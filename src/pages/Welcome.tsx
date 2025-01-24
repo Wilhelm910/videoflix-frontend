@@ -1,9 +1,13 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Cookies from 'js-cookie';
+import CustomLink from "../components/CustomLink";
+import { SignUpLinkWelcomePageProps } from "../ui/LinkProps.ui";
+import CustomLink__ from "../components/CustomLink__";
 
 export default function Welcome() {
     const navigate = useNavigate()
+    const [emailAddress, setEmailAddress] = useState()
 
     useEffect(() => {
         const cookieToken = Cookies.get("token")
@@ -15,6 +19,8 @@ export default function Welcome() {
         }
     }, [])
 
+    console.log(emailAddress)
+
     return (
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white space-y-4">
             <h1 className="text-4xl font-bold">Movies, TV shows, and more</h1>
@@ -23,13 +29,16 @@ export default function Welcome() {
             </p>
             <div className="flex items-center gap-4">
                 <input
-                    type="text"
+                    name="emailAddress"
+                    onChange={(e) => setEmailAddress(e.target.value)}
+                    type="email"
                     placeholder="Email Address"
                     className="bg-transparent px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <button className="bg-blue-500 text-white font-semibold rounded-full px-4 py-2">
-                    Sign Up &gt;
-                </button>
+                <CustomLink__ props={{
+                    ...SignUpLinkWelcomePageProps, // Nimmt alle bestehenden Eigenschaften aus SignUpLinkWelcomePageProps
+                    state: { email: emailAddress }, // Fügt eine neue Eigenschaft hinzu oder überschreibt eine bestehende
+                }} />
             </div>
         </div>
     )

@@ -11,6 +11,7 @@ export default function Home() {
     const [playVideo, setPlayVideo] = useState(false)
     const [movieData, setMovieData] = useState<MovieData[] | null>(null);
     const [openedVideo, setOpenedVideo] = useState<MovieData | null>(null);
+    const [randomMovie, setRandomMovie] = useState<MovieData | null>(null);
 
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {
@@ -40,6 +41,7 @@ export default function Home() {
                 });
                 const data = await response.json();
                 setMovieData(data);
+                setRandomMovie(data[Math.floor(Math.random() * data.length)])
             } catch (error) {
                 console.error(error);
             }
@@ -104,10 +106,6 @@ export default function Home() {
         // }
     }
 
-    console.log(playVideo)
-    console.log(openedVideo)
-
-
     useEffect(() => {
         if (playVideo) {
             // Verhindert das Scrollen
@@ -123,11 +121,18 @@ export default function Home() {
         };
     }, [playVideo]);
 
+    // console.log(movieData)
+    // useEffect(() => {
+    //     if (movieData) {
+    //         randomMovie = movieData[Math.floor(Math.random() * movieData.length)];
+    //     }
+    // }, [movieData])
+
 
     return (
         <>
             <div>
-                <AutoPlayVideo setPlayVideo={setPlayVideo} />
+                <AutoPlayVideo handleOpenVideoPlayer={handleOpenVideoPlayer} setPlayVideo={setPlayVideo} randomMovie={randomMovie} />
                 {uniqueGroups?.map((group) => {
                     const filteredMovies = movieData?.filter((movie) => {
                         if (group === "Favourite") {
@@ -138,7 +143,7 @@ export default function Home() {
                     })
                     return (
                         <div key={group}>
-                            <h1 className="font-bold text-2xl text-white mb-3 mt-10">{group}</h1>
+                            <h1 className="font-bold text-2xl text-white mb-3 mt-10 ml-5">{group.slice(0, 1).toUpperCase() + group.slice(1)}</h1>
                             <VideoCarousel movies={filteredMovies || []} handleFavouriteChange={handleFavouriteChange} handleOpenVideoPlayer={handleOpenVideoPlayer} />
                         </div>
                     )

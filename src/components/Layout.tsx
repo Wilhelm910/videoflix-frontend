@@ -103,6 +103,8 @@ export default function Layout() {
         <div className={`flex flex-col min-h-screen relative ${openedSettings && "bg-black bg-opacity-50 z-40"}`}>
             {/* Hintergrundbild */}
             {currentRoute === "/welcome" && <div className="absolute inset-0 bg-[url('/src/assets/bg-img-welcome.jpg')] bg-cover bg-center bg-no-repeat -z-10"></div>}
+            {currentRoute === "/impressum" && <div className="absolute inset-0 bg-[url('/src/assets/bg-img-welcome.jpg')] bg-cover bg-center bg-no-repeat -z-10"></div>}
+            {currentRoute === "/datenschutz" && <div className="absolute inset-0 bg-[url('/src/assets/bg-img-welcome.jpg')] bg-cover bg-center bg-no-repeat -z-10"></div>}
             {currentRoute === "/login" && <div className="absolute inset-0 bg-[url('/src/assets/bg-img-account.jpg')] bg-cover bg-center bg-no-repeat -z-10"></div>}
             {currentRoute === "/signUp" && <div className="absolute inset-0 bg-[url('/src/assets/bg-img-account.jpg')] bg-cover bg-center bg-no-repeat -z-10"></div>}
             {currentRoute === "/forgotPassword" && <div className="absolute inset-0 bg-[url('/src/assets/bg-img-account.jpg')] bg-cover bg-center bg-no-repeat -z-10"></div>}

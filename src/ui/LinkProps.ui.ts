@@ -20,13 +20,13 @@ export const HeaderLogoProps = {
 
 export const DataProtectionLinkProps = {
     content: "Datenschutz",
-    href: "/#/Datenschutz",
+    href: "/#/datenschutz",
     layout: "p-8"
 }
 
 export const ImpressumLinkProps = {
     content: "Impressum",
-    href: "/#/Impressum",
+    href: "/#/impressum",
     layout: "p-8"
 }
 
@@ -40,4 +40,10 @@ export const SignUpLinkProps = {
     content: "Sign Up now",
     href: "/#/signUp",
     layout: "text-blue-500"
+}
+
+export const SignUpLinkWelcomePageProps = {
+    content: "Sign Up >",
+    to: "/signUp",
+    layout: buttonAndLinkStyle
 }

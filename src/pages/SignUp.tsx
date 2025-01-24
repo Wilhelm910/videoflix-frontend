@@ -1,11 +1,12 @@
 import Modal from '../components/Modal'
 import SignUpButton from '../components/SendButton'
 import { SignUpButtonProps } from '../ui/ButtonProps.ui'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { UserProps } from '../types/types'
 import { BASE_URL } from '../static/api'
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useLocation } from 'react-router-dom'
 
 const initialUser = {
   email: "",
@@ -15,6 +16,18 @@ const initialUser = {
 export default function SignUp() {
   const [newUser, setNewUser] = useState<UserProps>(initialUser)
   const [confirmPassword, setConfirmPassword] = useState("")
+  const location = useLocation();
+  const receivedEmail = location.state?.email; // Zugriff auf die Email
+
+  useEffect(() => {
+    if (receivedEmail) {
+      setNewUser((prev) => ({
+        ...prev,
+        email: receivedEmail
+      }))
+    }
+  }, [receivedEmail])
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (e.target.name == "confirmPassword") {

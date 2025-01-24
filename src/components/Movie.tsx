@@ -47,9 +47,6 @@ export default function Movie({ movie, handleFavouriteChange, handleOpenVideoPla
         } 
     };
 
-    console.log(movie.title, favourite)
-    console.log(isDisabled)
-
     useEffect(() => {
 
     }, [favourite])

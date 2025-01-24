@@ -8,6 +8,9 @@ import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import SignUp from './pages/SignUp';
 import ResetPassword from './pages/ResetPassword';
+import ProtectedRoute from './components/ProtectedRoute';
+import Datenschutz from './pages/Datenschutz';
+import Impressum from './pages/Impressum';
 
 function App() {
 
@@ -24,7 +27,14 @@ function App() {
             <Route path="/forgotPassword" element={<ForgotPassword />} />
             <Route path="/password-reset" element={<ResetPassword />} />
             <Route path="/signUp" element={<SignUp />} />
-            {token && <Route path="/home" element={<Home />} />}
+            {/* {token && <Route path="/home" element={<Home />} />} */}
+            {/* <Route path="/home" element={<Home />} /> */}
+            {/* Geschützte Routen */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/home" element={<Home />} />
+            </Route>
+            <Route path="/impressum" element={<Impressum />} />
+            <Route path="/datenschutz" element={<Datenschutz />} />
             <Route path="/email-verification" element={<EmailVerification />} />
             <Route path="*" element={<Navigate to="/welcome" />} />
           </Route >

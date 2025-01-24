@@ -282,7 +282,7 @@ export default function VideoCarousel({ movies, handleFavouriteChange, handleOpe
 
     return (
         <div
-            className="flex items-center gap-4 relative"
+            className={`flex items-center ${ width <= 500 && "justify-center"} gap-4 relative`}
             onTouchStart={width <= 500 ? handleTouchStart : undefined}
             onTouchMove={width <= 500 ? handleTouchMove : undefined}
             onTouchEnd={width <= 500 ? handleTouchEnd : undefined}
