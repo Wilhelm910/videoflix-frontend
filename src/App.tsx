@@ -22,6 +22,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Layout />} >
+            <Route path="/" element={<Navigate to="/welcome" replace />} />
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgotPassword" element={<ForgotPassword />} />

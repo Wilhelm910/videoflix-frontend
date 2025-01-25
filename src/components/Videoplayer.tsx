@@ -34,7 +34,7 @@ const VideoPlayer = ({ movie }) => {
     return (
         <>
             <video
-                className="w-full"
+                className="w-full max-h-96"
                 src={`${import.meta.env.VITE_BACKEND_URL}/${currentMovieFilePath}`}
                 controls
             />

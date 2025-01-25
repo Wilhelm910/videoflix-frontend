@@ -61,7 +61,7 @@ export default function AutoPlayVideo({ setPlayVideo, randomMovie, handleOpenVid
         <div className='flex justify-center flex-col mb-10'>
             {/* Video-Hintergrund */}
             <video
-                className="w-full sm:w-[800px] object-cover shadow-xl rounded-lg self-center"
+                className="w-full sm:w-[800px] object-cover shadow-xl rounded-lg self-center max-h-96"
                 src={`${import.meta.env.VITE_BACKEND_URL}/${randomMovieData.video_file}`}
                 autoPlay
                 muted
