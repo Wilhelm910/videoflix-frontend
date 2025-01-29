@@ -33,24 +33,26 @@ const VideoPlayer = ({ movie }) => {
 
     return (
         <>
-            <video
-                className="w-full max-h-96"
-                src={`${import.meta.env.VITE_BACKEND_URL}/${currentMovieFilePath}`}
-                controls
-            />
-            <div className="flex gap-2">
-                <button onClick={() => loadVersion("360p")} className="bg-blue-500 px-2 py-1 rounded-lg text-xs">
-                    360p
-                </button>
-                <button onClick={() => loadVersion("480p")} className="bg-blue-500 px-2 py-1 rounded-lg text-xs">
-                    480p
-                </button>
-                <button onClick={() => loadVersion("720p")} className="bg-blue-500 px-2 py-1 rounded-lg text-xs">
-                    720p
-                </button>
-                <button onClick={() => loadVersion("1080p")} className="bg-blue-500 px-2 py-1 rounded-lg text-xs">
-                    1080p
-                </button>
+            <div className="bg-black p-2">
+                <video
+                    className="w-full max-h-96"
+                    src={`${import.meta.env.VITE_BACKEND_URL}/${currentMovieFilePath}`}
+                    controls
+                />
+                <div className="flex gap-2">
+                    <button onClick={() => loadVersion("360p")} className="bg-blue-500 px-2 py-1 rounded-xl text-xs">
+                        360p
+                    </button>
+                    <button onClick={() => loadVersion("480p")} className="bg-blue-500 px-2 py-1 rounded-xl text-xs">
+                        480p
+                    </button>
+                    <button onClick={() => loadVersion("720p")} className="bg-blue-500 px-2 py-1 rounded-xl text-xs">
+                        720p
+                    </button>
+                    <button onClick={() => loadVersion("1080p")} className="bg-blue-500 px-2 py-1 rounded-xl text-xs">
+                        1080p
+                    </button>
+                </div>
             </div>
         </>
     );

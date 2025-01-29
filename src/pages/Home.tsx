@@ -152,7 +152,7 @@ export default function Home() {
             {playVideo && openedVideo && (
                 <div
                     onClick={() => setPlayVideo(false)}
-                    className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center z-20 bg-black bg-opacity-50"
+                    className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center z-20 bg-black bg-opacity-70"
                 >
                     <div
                         onClick={(e) => e.stopPropagation()} // Verhindert, dass der Overlay-Klick ausgelöst wird
