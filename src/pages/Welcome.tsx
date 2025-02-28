@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Cookies from 'js-cookie';
-import CustomLink from "../components/CustomLink";
 import { SignUpLinkWelcomePageProps } from "../ui/LinkProps.ui";
 import CustomLink__ from "../components/CustomLink__";
 
 export default function Welcome() {
     const navigate = useNavigate()
-    const [emailAddress, setEmailAddress] = useState()
+    const [emailAddress, setEmailAddress] = useState<string>()
 
     useEffect(() => {
         const cookieToken = Cookies.get("token")
@@ -18,8 +17,6 @@ export default function Welcome() {
             navigate("/home")
         }
     }, [])
-
-    console.log(emailAddress)
 
     return (
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white space-y-4">

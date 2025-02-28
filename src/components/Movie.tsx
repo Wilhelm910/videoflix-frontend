@@ -24,7 +24,6 @@ export default function Movie({ movie, handleFavouriteChange, handleOpenVideoPla
     }, [movie.favourite]);
 
     const handleFavourite = async (favourite: boolean, movieId: number) => {
-        console.log(movie.title)
         if (isDisabled) return; // Verhindert das doppelte Klicken
         try {
             const response = await fetch(`${BASE_URL}/video/${movieId}/update-favourite/`, {

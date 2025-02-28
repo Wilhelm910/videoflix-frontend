@@ -13,6 +13,7 @@ export default function Home() {
     const [openedVideo, setOpenedVideo] = useState<MovieData | null>(null);
     const [randomMovie, setRandomMovie] = useState<MovieData | null>(null);
 
+
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {
             if (e.key === "Escape") {
@@ -78,7 +79,6 @@ export default function Home() {
     };
 
     const handleOpenVideoPlayer = async (movieId: number) => {
-        console.log(movieId)
         try {
             const response = await fetch(`${BASE_URL}/video/${movieId}/`, {
                 method: "GET",
@@ -90,20 +90,11 @@ export default function Home() {
                 console.log("error")
             }
             const data = await response.json()
-            console.log(data)
             setOpenedVideo(data)
             setPlayVideo(true)
         } catch (error) {
             console.log(error)
         }
-        // if (movieData) {
-        //     movieData.map((movie) => {
-        //         console.log("test")
-        //         console.log(movie.id)
-        //         console.log(movieId)
-        //         movie.id === movieId ? setOpenedVideo(movie) : setOpenedVideo(null)
-        //     })
-        // }
     }
 
     useEffect(() => {
@@ -114,25 +105,17 @@ export default function Home() {
             // Erlaubt das Scrollen wieder
             document.body.style.overflow = "auto";
         }
-
-        // Cleanup: Setzt den Overflow zurück, wenn das Video geschlossen wird
         return () => {
             document.body.style.overflow = "auto";
         };
     }, [playVideo]);
 
-    // console.log(movieData)
-    // useEffect(() => {
-    //     if (movieData) {
-    //         randomMovie = movieData[Math.floor(Math.random() * movieData.length)];
-    //     }
-    // }, [movieData])
-
-
     return (
         <>
             <div>
-                <AutoPlayVideo handleOpenVideoPlayer={handleOpenVideoPlayer} setPlayVideo={setPlayVideo} randomMovie={randomMovie} />
+                {randomMovie &&
+                    <AutoPlayVideo handleOpenVideoPlayer={handleOpenVideoPlayer} randomMovie={randomMovie} />
+                }
                 {uniqueGroups?.map((group) => {
                     const filteredMovies = movieData?.filter((movie) => {
                         if (group === "Favourite") {

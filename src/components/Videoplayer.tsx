@@ -1,8 +1,26 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BASE_URL } from "../static/api";
+import { toast } from "react-toastify";
 
-const VideoPlayer = ({ movie }) => {
+const VideoPlayer = ({ movie }:any) => {
     const [currentMovieFilePath, setCurrentMovieFilePath] = useState(movie.video_file)
+    const videoRef = useRef<HTMLVideoElement | null>(null);
+    const [, setSavedTime] = useState<number | null>(null);
+
+    // Funktion zum Speichern der aktuellen Position
+    const saveVideoPosition = () => {
+        if (videoRef.current) {
+            sessionStorage.setItem(`video_position_${movie.id}`, videoRef.current.currentTime.toString());
+        }
+    };
+
+    // Position aus sessionStorage abrufen
+    useEffect(() => {
+        const storedTime = sessionStorage.getItem(`video_position_${movie.id}`);
+        if (storedTime) {
+            setSavedTime(parseFloat(storedTime));
+        }
+    }, [currentMovieFilePath]);
 
     const loadVersion = async (version: string) => {
         console.log(`${BASE_URL}/video/${movie.id}/${version}/`)
@@ -19,9 +37,8 @@ const VideoPlayer = ({ movie }) => {
             if (!response.ok) {
                 throw new Error(`Error: ${response.statusText}`);
             } else {
-                console.log(data)
                 setCurrentMovieFilePath(data[`video_file_${version}`])
-                console.log(currentMovieFilePath)
+                toast.success(`Now playing in ${version}`)
             }
         }
         catch (error) {
@@ -29,15 +46,18 @@ const VideoPlayer = ({ movie }) => {
         }
     }
 
-    console.log(`${import.meta.env.VITE_BACKEND_URL}/${currentMovieFilePath}`)
-
     return (
         <>
             <div className="bg-black p-2">
                 <video
+                    id='videoPlayer'
+                    ref={videoRef}
                     className="w-full max-h-96"
                     src={`${import.meta.env.VITE_BACKEND_URL}/${currentMovieFilePath}`}
                     controls
+                    onPause={saveVideoPosition}
+                    onEnded={saveVideoPosition}
+
                 />
                 <div className="flex gap-2">
                     <button onClick={() => loadVersion("360p")} className="bg-blue-500 px-2 py-1 rounded-xl text-xs">

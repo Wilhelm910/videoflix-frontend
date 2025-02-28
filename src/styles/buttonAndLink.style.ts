@@ -1,1 +1,1 @@
-export const buttonAndLinkStyle = "bg-blue-500 text-white font-semibold rounded-full px-4 py-2"
+export const buttonAndLinkStyle = "bg-blue-500 text-white font-semibold rounded-full px-4 py-2 transform transition hover:scale-110 active:scale-105"

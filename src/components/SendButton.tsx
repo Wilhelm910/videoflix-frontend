@@ -5,14 +5,15 @@ type SendButtonProps = {
     }
     buttonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     type: "submit" | "reset" | "button" | undefined
+    disabled?: boolean
 }
 
 
-export default function SendButton({ props, buttonClick, type }: SendButtonProps) {
+export default function SendButton({ props, buttonClick, type, disabled }: SendButtonProps) {
 
     const { content, layout } = props
 
     return (
-        <button type={type} onClick={buttonClick} className={layout}>{content}</button>
+        <button disabled={disabled} type={type} onClick={buttonClick} className={layout}>{content}</button>
     )
 }

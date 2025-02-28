@@ -18,7 +18,6 @@ export default function ForgotPassword() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("user Email: ", userEmail)
     try {
       const response = await fetch(`${BASE_URL}/password-reset/`, {
         method: "POST",
@@ -28,12 +27,11 @@ export default function ForgotPassword() {
         body: JSON.stringify({ email: userEmail }),
       })
       if (response.ok) {
-        const data = await response.json()
-        console.log(data)
         toast.success("Email sent. Please check your Emails.")
       }
     } catch (error) {
       console.log(error)
+      toast.error(`${error}`)
     }
 
   }

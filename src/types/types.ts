@@ -2,6 +2,10 @@ export type CustomLinkProps = {
     props: { href: string, content?: string, layout?: string, img?: string }
 }
 
+export type CustomLinkNewProps = {
+    props: { to: string, content?: string, layout?: string, img?: string }
+}
+
 export type CustomButtonProps = {
     props: { content: string, layout?: string }
 }
@@ -25,7 +29,7 @@ export type UserProps = {
 }
 
 
-export type CustomLinkProps__ {
+export type CustomLinkProps__ = {
     props: {
         to: string; 
         content?: string;

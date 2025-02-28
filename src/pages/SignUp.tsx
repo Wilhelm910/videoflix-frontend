@@ -38,9 +38,6 @@ export default function SignUp() {
         [e.target.name]: e.target.value
       }))
     }
-    if (newUser.password != confirmPassword) {
-      console.log("passwords dont match")
-    }
   }
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -55,20 +52,28 @@ export default function SignUp() {
           body: JSON.stringify(newUser)
         })
         if (response.ok) {
-          const user = await response.json()
-          console.log(user)
           setNewUser(initialUser)
           setConfirmPassword("")
           toast.success("User successfull created. Please confirm your Email-Address.")
+        } else {
+          const data = await response.json()
+          if (data.error) {
+            toast.error(data.error)
+          } else {
+            toast.error("An error occured.")
+          }
         }
       } catch (error) {
-        console.log(error)
+        toast.error(`${error}`)
       }
     }
     else {
       toast.error("Passwords dont match")
     }
   }
+
+  const isFormValid = newUser.email && newUser.password && confirmPassword;
+
 
   return (
     <Modal title={"Sign Up"}>
@@ -94,7 +99,7 @@ export default function SignUp() {
           type="password"
           className="placeholder-blue-500 w-full p-2 border border-gray-300 rounded-lg ring-2 ring-blue-500"
           placeholder="Confirm Password" />
-        <SignUpButton type="submit" buttonClick={(e) => handleSubmit(e)} props={SignUpButtonProps} />
+        <SignUpButton disabled={!isFormValid} type="submit" buttonClick={(e) => handleSubmit(e)} props={SignUpButtonProps} />
       </form>
     </Modal>
   )

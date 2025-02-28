@@ -14,12 +14,9 @@ import Impressum from './pages/Impressum';
 
 function App() {
 
-  const token = sessionStorage.getItem("token")
-
-
   return (
     <>
-      <Router>
+      <Router >
         <Routes>
           <Route path='/' element={<Layout />} >
             <Route path="/" element={<Navigate to="/welcome" replace />} />

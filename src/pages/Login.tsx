@@ -1,6 +1,4 @@
 import { useState } from "react";
-import CustomButton from "../components/CustomButton__";
-import CustomLink from "../components/CustomLink";
 import Modal from "../components/Modal";
 import { LogInButtonProps } from "../ui/ButtonProps.ui";
 import { ForgotPasswordLinkProps, SignUpLinkProps } from "../ui/LinkProps.ui";
@@ -11,6 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import CustomLinkNew from "../components/CustomLinkNew";
 
 
 
@@ -35,6 +34,7 @@ export default function Login() {
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         try {
+            toast.success(`Checking credentials...`)
             const response = await fetch(`${BASE_URL}/login/`, {
                 method: "POST",
                 headers: {
@@ -42,17 +42,20 @@ export default function Login() {
                 },
                 body: JSON.stringify(user)
             })
+            toast.success(`Logging in...`)
             let data = await response.json()
             if (response.ok) {
                 sessionStorage.setItem("token", data.token)
                 if (rememberMe) {
                     Cookies.set('token', data.token, { expires: 30, secure: true, sameSite: 'strict' });
                 }
+                
                 navigate("/home")
             } else {
                 toast.error(data.error)
             }
         } catch (error) {
+            toast.error(`${error}`)
             console.log(error)
         }
     }
@@ -91,10 +94,10 @@ export default function Login() {
                     </div>
                     <SendButton type="submit" props={LogInButtonProps} buttonClick={(e) => handleSubmit(e)} />
                 </form>
-                <CustomLink props={ForgotPasswordLinkProps} />
+                <CustomLinkNew props={ForgotPasswordLinkProps} />
                 <div className="flex gap-2" >
                     <p>New to Videoflix?</p>
-                    <CustomLink props={SignUpLinkProps} />
+                    <CustomLinkNew props={SignUpLinkProps} />
                 </div>
             </Modal>
         </>

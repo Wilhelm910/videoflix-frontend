@@ -18,8 +18,7 @@ export default function Settings() {
     const [newPassword, setNewPassword] = useState("")
     const [oldPassword, setOldPassword] = useState("")
     const [confirmNewPassword, setConfirmNewPassword] = useState("")
-    const [responseData, setResponseData] = useState<ResponseDataProps | null>(null)
-
+    const [, setResponseData] = useState<ResponseDataProps | null>(null)
 
     useEffect(() => {
         const loadUser = async () => {
@@ -33,7 +32,6 @@ export default function Settings() {
                 })
                 if (response.ok) {
                     const data = await response.json();
-                    console.log(data)
                     setUser(data)
                 } else {
                     const errorResponse = await response.json()
