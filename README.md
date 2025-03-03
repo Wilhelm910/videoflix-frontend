@@ -44,7 +44,7 @@ For a devevlopment, create a .env.development file in the root directory with th
 5. **Production:**
 
 For a production build, create a .env.production file in the root directory with the correct backend URL:
-    ```
+  ```
    VITE_BACKEND_URL="https://your-production-backend-url"
     ```
 
