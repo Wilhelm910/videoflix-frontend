@@ -77,7 +77,7 @@ export default function SignUp() {
     }
   }
 
-  const isFormValid = !!(newUser.email && newUser.password && confirmPassword);
+  //const isFormValid = !!(newUser.email && newUser.password && confirmPassword);
 
 
   return (

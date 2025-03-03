@@ -1,50 +1,42 @@
-# React + TypeScript + Vite
+# VideoFlix Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend of the VideoFlix platform – a modern video streaming application. The application is built with React and utilizes Vite for a fast build process, Tailwind CSS for styling, and React Router for navigation.
 
-Currently, two official plugins are available:
+## Technologies
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React:** Library for building user interfaces.
+- **Vite:** Build tool providing a fast development environment.
+- **Tailwind CSS:** Utility-first CSS framework for styling.
+- **React Router:** Enables declarative routing in the application.
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Node.js (>= 14.x)
+- npm (>= 6.x)
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. **Clone the repository:**
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+   ```bash
+   git clone https://github.com/Wilhelm910/videoflix-frontend.git
+   cd videoflix-frontend
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+2. **Install dependencies:**
+npm install
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+
+3. **Configure environment variables:**
+VITE_BACKEND_URL="http://localhost:8000"
+
+
+4. **Start the development environment with:**
+npm run dev
+
+5. **Production:**
+For a production build, create a .env.production file in the root directory with the correct backend URL:
+VITE_BACKEND_URL="https://your-production-backend-url"
+
+Then create the production build with:
+npm run build
+
