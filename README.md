@@ -21,14 +21,16 @@ This is the frontend of the VideoFlix platform – a modern video streaming appl
    ```bash
    git clone https://github.com/Wilhelm910/videoflix-frontend.git
    cd videoflix-frontend
+   ```
 
 2. **Install dependencies:**
    ```bash
    npm install
+   ```
 
 
 3. **Configure environment variables:**
-   ```bash
+    ```env
    VITE_BACKEND_URL="http://localhost:8000"
     ```
 
@@ -41,7 +43,7 @@ This is the frontend of the VideoFlix platform – a modern video streaming appl
 5. **Production:**
 
 For a production build, create a .env.production file in the root directory with the correct backend URL:
-   ```bash
+    ```env
    VITE_BACKEND_URL="https://your-production-backend-url"
     ```
 
