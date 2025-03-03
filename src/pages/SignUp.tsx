@@ -17,7 +17,8 @@ export default function SignUp() {
   const [newUser, setNewUser] = useState<UserProps>(initialUser)
   const [confirmPassword, setConfirmPassword] = useState("")
   const location = useLocation();
-  const receivedEmail = location.state?.email; // Zugriff auf die Email
+  const receivedEmail = location.state?.email;
+  const [disabled, setDisabled] = useState(false)
 
   useEffect(() => {
     if (receivedEmail) {
@@ -27,6 +28,7 @@ export default function SignUp() {
       }))
     }
   }, [receivedEmail])
+
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -43,6 +45,8 @@ export default function SignUp() {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
     if (confirmPassword === newUser.password) {
+      setDisabled(true)
+      toast.success("Trying to register user...")
       try {
         const response = await fetch(`${BASE_URL}/register/`, {
           method: "POST",
@@ -66,13 +70,14 @@ export default function SignUp() {
       } catch (error) {
         toast.error(`${error}`)
       }
+      setDisabled(false)
     }
     else {
       toast.error("Passwords dont match")
     }
   }
 
-  const isFormValid = newUser.email && newUser.password && confirmPassword;
+  const isFormValid = !!(newUser.email && newUser.password && confirmPassword);
 
 
   return (
@@ -99,7 +104,7 @@ export default function SignUp() {
           type="password"
           className="placeholder-blue-500 w-full p-2 border border-gray-300 rounded-lg ring-2 ring-blue-500"
           placeholder="Confirm Password" />
-        <SignUpButton disabled={!isFormValid} type="submit" buttonClick={(e) => handleSubmit(e)} props={SignUpButtonProps} />
+        <SignUpButton disabled={disabled} type="submit" buttonClick={(e) => handleSubmit(e)} props={SignUpButtonProps} />
       </form>
     </Modal>
   )

@@ -42,9 +42,9 @@ export default function Login() {
                 },
                 body: JSON.stringify(user)
             })
-            toast.success(`Logging in...`)
             let data = await response.json()
             if (response.ok) {
+                toast.success(`Logging in...`)
                 sessionStorage.setItem("token", data.token)
                 if (rememberMe) {
                     Cookies.set('token', data.token, { expires: 30, secure: true, sameSite: 'strict' });
