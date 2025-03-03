@@ -30,6 +30,7 @@ This is the frontend of the VideoFlix platform – a modern video streaming appl
 
 
 3. **Configure environment variables:**
+For a devevlopment, create a .env.development file in the root directory with the correct backend URL:
     ```
    VITE_BACKEND_URL="http://localhost:8000"
     ```
