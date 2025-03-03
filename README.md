@@ -23,26 +23,30 @@ This is the frontend of the VideoFlix platform – a modern video streaming appl
    cd videoflix-frontend
 
 2. **Install dependencies:**
-  ```bash
-  npm install
+   ```bash
+   npm install
 
 
 3. **Configure environment variables:**
-  ```bash
-  VITE_BACKEND_URL="http://localhost:8000"
+   ```bash
+   VITE_BACKEND_URL="http://localhost:8000"
+    ```
 
 
 4. **Start the development environment with:**
-  ```bash
-  npm run dev
+   ```bash
+   npm run dev
+    ```
 
 5. **Production:**
 
 For a production build, create a .env.production file in the root directory with the correct backend URL:
-  ```bash
-  VITE_BACKEND_URL="https://your-production-backend-url"
+   ```bash
+   VITE_BACKEND_URL="https://your-production-backend-url"
+    ```
 
 5. **Then create the production build with:**
-  ```bash
-  npm run build
+   ```bash
+   npm run build
+    ```
 
